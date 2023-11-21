@@ -1,0 +1,31 @@
+.header {
+	padding: 24px;
+	/* width: 100%; */
+	/* max-width: 1288px; */
+	background: rgba(28, 28, 33, 1);
+}
+
+.headerMenu {
+	display: flex;
+	justify-content: space-between;
+}
+
+.headerMenuGroup {
+	display: flex;
+	justify-content: flex-start;
+	gap: 28px;
+}
+
+.headerMenuItem {
+	flex: 1;
+	display: flex;
+	justify-content: space-around;
+}
+
+.headerMenuItem:first-child {
+	justify-content: start;
+}
+
+.headerMenuItem:last-child {
+	justify-content: end;
+}
