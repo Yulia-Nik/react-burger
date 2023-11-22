@@ -1,10 +1,4 @@
 .ingredientsContainer {
-	height: 600px;
+	height: calc(100vh - 340px); /* Подкорректировать */
 	overflow-y: scroll;
-}
-
-.ingredientsGroup {
-	display: flex;
-	justify-content: space-between;
-	flex-wrap: wrap;
 }

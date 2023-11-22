@@ -1,0 +1,7 @@
+.cost {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	font-size: 28px;
+	font-family: 'Iceland', Arial, sans-serif;
+}

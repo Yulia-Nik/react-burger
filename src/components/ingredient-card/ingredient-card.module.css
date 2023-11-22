@@ -1,16 +1,11 @@
 .ingredientCard {
+	margin-bottom: 32px;
 	position: relative;
-	width: calc(50% - 12px);
+	/* width: calc(50% - 12px); */
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
 	align-items: center;
-}
-
-.cost {
-	display: flex;
-	gap: 8px;
-	align-items: center;
-	font-size: 28px;
 }
 
 .name {
