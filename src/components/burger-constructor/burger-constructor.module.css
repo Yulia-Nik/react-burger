@@ -1,0 +1,22 @@
+.list {
+	padding: 0;
+	list-style-type: none;
+}
+
+.group {
+	composes: list;
+}
+
+.scrollList {
+	composes: list;
+	height: 100%;
+	max-height: calc(100vh - 250px); /* Подкорректировать */
+	overflow-y: scroll;
+}
+
+.footer {
+	padding: 20px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}

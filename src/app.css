@@ -14,8 +14,28 @@
 	gap: 40px;
 }
 
+.content-column {
+	width: 50%;
+}
+
 h1 {
 	margin: 0;
 	font-size: 36px;
 	font-weight: 700;
+}
+
+*:-webkit-scrollbar-track {
+	border-radius: 3px;
+	background-color: rgba(47, 47, 55, 1);
+}
+
+*::-webkit-scrollbar {
+	width: 8px;
+	background-color: rgba(47, 47, 55, 1);
+}
+
+*::-webkit-scrollbar-thumb {
+	height: 105px;
+	background-color: rgba(133, 133, 173, 1)
+	;
 }

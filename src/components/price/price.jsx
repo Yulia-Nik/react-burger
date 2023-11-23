@@ -5,7 +5,7 @@ import styles from './price.module.css';
 
 const Price = props =>{
 	return (
-		<div className={styles.cost}>
+		<div className={`${styles.cost}${props.type === 'big' ? ` ${styles.costBig}` : ''}`}>
 			{props.price}
 			<CurrencyIcon type="primary" className="ml-2" />
 		</div>

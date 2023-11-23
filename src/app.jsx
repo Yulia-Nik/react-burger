@@ -4,6 +4,30 @@ import BurgerIngredients from './components/burger-ingredients/burger-ingredient
 import BurgerConstructor from './components/burger-constructor/burger-constructor';
 import './app.css';
 
+import { ingredientsData } from './utils/data'; // Временный импорт
+
+const ingredients = ingredientsData.reduce((acc, elem) => {
+	const newType = Object.keys(acc).indexOf(elem.type) === -1;
+
+	if (newType) {
+		return {
+			...acc,
+			[elem.type]: [
+				elem
+			]
+		};
+	} else {
+		return {
+			...acc,
+			[elem.type]: [
+				...acc[elem.type],
+				elem,
+			]
+		};
+	}
+}, {});
+console.log(ingredients);
+
 function App() {
 	return (
 		<div className="app">
@@ -13,7 +37,7 @@ function App() {
 					Соберите бургер
 				</h1>
 				<div className="main-content">
-					<BurgerIngredients />
+					<BurgerIngredients ingredients={ingredients} />
 					<BurgerConstructor />
 				</div>
 			</main>

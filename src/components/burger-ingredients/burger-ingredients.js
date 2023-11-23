@@ -4,8 +4,6 @@ import IngredientsGroup from '../ingredients-group/ingredients-group';
 
 import styles from './burger-ingredients.module.css';
 
-import { ingredientsData } from '../../utils/data'; // Временный импорт
-
 const getIngredientsGroupTitle = key => {
 	switch(key) {
 		case 'bun':
@@ -23,49 +21,27 @@ const getIngredientsGroupTitle = key => {
 	};
 };
 
-const ingredients = ingredientsData.reduce((acc, elem) => {
-	const newType = Object.keys(acc).indexOf(elem.type) === -1;
-
-	if (newType) {
-		return {
-			...acc,
-			[elem.type]: [
-				elem
-			]
-		};
-	} else {
-		return {
-			...acc,
-			[elem.type]: [
-				...acc[elem.type],
-				elem,
-			]
-		};
-	}
-}, {});
-console.log(ingredients);
-
-const BurgerIngredients = () => {
+const BurgerIngredients = props => {
 	return (
-		<div>
+		<section className="content-column">
 			<Tabs />
 			<div className={styles.ingredientsContainer}>
-				{ingredients.bun.length && (
-					<IngredientsGroup title={getIngredientsGroupTitle('bun')} data={ingredients.bun} />
+				{props.ingredients.bun.length && (
+					<IngredientsGroup title={getIngredientsGroupTitle('bun')} data={props.ingredients.bun} />
 				)}
-				{ingredients.main.length && (
-					<IngredientsGroup title={getIngredientsGroupTitle('main')} data={ingredients.main} />
+				{props.ingredients.main.length && (
+					<IngredientsGroup title={getIngredientsGroupTitle('main')} data={props.ingredients.main} />
 				)}
-				{ingredients.sauce.length && (
-					<IngredientsGroup title={getIngredientsGroupTitle('sauce')} data={ingredients.sauce} />
+				{props.ingredients.sauce.length && (
+					<IngredientsGroup title={getIngredientsGroupTitle('sauce')} data={props.ingredients.sauce} />
 				)}
 			</div>
-		</div>
+		</section>
 	);
 };
 
 BurgerIngredients.propTypes = {
-
+	ingredients: PropTypes.object,
 };
 
 export default BurgerIngredients;

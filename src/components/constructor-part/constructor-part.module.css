@@ -1,0 +1,58 @@
+.btn {
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	padding: 0;
+	border: 0;
+	background: 0 0;
+	color: inherit;
+	font: inherit;
+	line-height: normal;
+	text-align: center;
+	text-decoration: none;
+	overflow: visible;
+	user-select: none;
+}
+
+.img {
+	width: 80px;
+	height: 40px;
+	object-fit: contain;
+}
+
+.flex {
+	/* margin: 0; */
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 20px;
+}
+
+.ingredient {
+	composes: flex;
+	flex: 1;
+	/* display: flex;
+	justify-content: space-between; */
+	padding: 16px 32px 16px 24px;
+	background: rgba(28, 28, 33, 1);
+	border-radius: 40px;
+}
+
+.firstIngredient {
+	composes: ingredient;
+	margin: 0 8px 0 32px;
+	border-radius: 88px 88px 40px 40px;
+}
+
+.lastIngredient {
+	composes: ingredient;
+	margin: 0 8px 0 32px;
+	border-radius: 40px 40px 88px 88px;
+}
+
+.wrap {
+	composes: flex;
+	gap: 8px;
+	padding: 0 8px;
+	/* margin-bottom: 16px; */
+}

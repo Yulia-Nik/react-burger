@@ -1,4 +1,5 @@
 .ingredientsContainer {
-	height: calc(100vh - 340px); /* Подкорректировать */
+	padding: 0 8px;
+	height: calc(100vh - 30px); /* Подкорректировать */
 	overflow-y: scroll;
 }
