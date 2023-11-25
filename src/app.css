@@ -8,6 +8,10 @@
 	max-width: 1288px;
 }
 
+.relative-block {
+	position: relative;
+}
+
 .main-content {
 	display: flex;
 	justify-content: space-between;
