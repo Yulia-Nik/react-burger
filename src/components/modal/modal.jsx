@@ -1,5 +1,5 @@
+import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
-
 import ModalBody from './part/modal-body/modal-body';
 import ModalOverlay from './part/modal-overlay/modal-overlay';
 
@@ -10,13 +10,19 @@ const Modal = ({title, children, onClose}) => {
 
 	return createPortal(
 		<div className={styles.wrap}>
-			<ModalOverlay onClick={onClose} />
+			<ModalOverlay onClose={onClose} />
 			<ModalBody title={title} onClose={onClose}>
 				{children}
 			</ModalBody>
 		</div>
 		, modalRoot
 	);
+};
+
+Modal.propTypes = {
+	title: PropTypes.string,
+	children: PropTypes.element,
+	onClose: PropTypes.func,
 };
 
 export default Modal;

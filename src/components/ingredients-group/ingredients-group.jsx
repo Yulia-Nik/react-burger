@@ -10,7 +10,7 @@ const IngredientsGroup = props => {
 			<ul className={styles.list}>
 				{props.data.map(ingredient =>
 					<li className={styles.ingredientItem} key={ingredient._id}>
-						<IngredientCard {...ingredient} count={1} />
+						<IngredientCard ingredient={ingredient} count={1} onSelect={props.onSelect} />
 					</li>
 				)}
 			</ul>
@@ -21,6 +21,7 @@ const IngredientsGroup = props => {
 IngredientsGroup.propTypes = {
 	title: PropTypes.string,
 	data: PropTypes.array,
+	onSelect: PropTypes.func,
 };
 
 export default IngredientsGroup;

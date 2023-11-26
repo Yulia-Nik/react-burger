@@ -1,53 +1,30 @@
 import PropTypes from 'prop-types';
-import { useState, useRef } from 'react';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import Price from '../../components/price/price';
-import Modal from '../../components/modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
 
 import styles from './ingredient-card.module.css';
 
-const IngredientCard = props => {
-	const [showDetails, setShowDetails] = useState(false);
-
-	const ingredientsCardRef = useRef();
-
-	const handleModalOpen = () => {
-		setShowDetails(true);
-	};
-
-	const handleModalClose = () => {
-		setShowDetails(false);
-	};
+const IngredientCard = ({ingredient, count, onSelect}) => {
+	const handleClick = () => onSelect(ingredient);
 
 	return (
 		<>
-			<div className={styles.ingredientCard} ref={ingredientsCardRef} onClick={handleModalOpen}>
-				<img alt={props.alt} src={props.image} />
-				<Price price={props.price} />
-				<div className={styles.name}>{props.name}</div>
-				{props.count && (
-					<Counter count={props.count} />
+			<div className={styles.ingredientCard} onClick={handleClick}>
+				<img alt={ingredient.alt} src={ingredient.image} />
+				<Price price={ingredient.price} />
+				<div className={styles.name}>{ingredient.name}</div>
+				{count && (
+					<Counter count={count} />
 				)}
 			</div>
-			{showDetails && (
-				<Modal onClose={handleModalClose}>
-					<IngredientDetails {...props} />
-				</Modal>
-			)}
 		</>
 	);
 };
 
 IngredientCard.propTypes = {
-	alt: PropTypes.string,
-	src: PropTypes.any,
-	price: PropTypes.oneOfType([
-		PropTypes.string,
-		PropTypes.number,
-	]),
-	name: PropTypes.string,
+	ingredient: PropTypes.object,
 	count: PropTypes.number,
+	onSelect: PropTypes.func,
 };
 
 export default IngredientCard;

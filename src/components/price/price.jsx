@@ -13,7 +13,8 @@ const Price = props =>{
 };
 
 Price.propTypes = {
-	cost: PropTypes.number
+	price: PropTypes.number,
+	type: PropTypes.string,
 };
 
 export default Price;

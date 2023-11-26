@@ -40,6 +40,5 @@ h1 {
 
 *::-webkit-scrollbar-thumb {
 	height: 105px;
-	background-color: rgba(133, 133, 173, 1)
-	;
+	background-color: rgba(133, 133, 173, 1);
 }
