@@ -5,12 +5,16 @@
 
 .group {
 	composes: list;
+	height: calc(100% - 96px);
+}
+
+.gropItem {
+	height: calc(100% - 282px);
 }
 
 .scrollList {
 	composes: list;
 	height: 100%;
-	max-height: calc(100vh - 250px); /* Подкорректировать */
 	overflow-y: scroll;
 }
 

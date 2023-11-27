@@ -1,18 +1,21 @@
 .body {
 	position: relative;
-	padding: 60px;
+	padding: 40px;
 	margin: auto;
 	max-width: 720px;
 	background: rgba(28, 28, 33, 1);
 	border-radius: 40px;
 }
 
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
 .close {
-	position: absolute;
-	top: 60px;
-	right: 40px;
-	width: 20px;
-	height: 20px;
+	width: 24px;
+	height: 24px;
 	display: inline-block;
 	padding: 0;
 	border: 0;
@@ -31,11 +34,9 @@
 .close::after {
 	content: '';
 	position: absolute;
-	top: 50%;
-	left: 50%;
 	display: inline-block;
-	width: 26px;
-	height: 4px;
+	width: 30px;
+	height: 2px;
 	border-radius: 4px;
 	background-color: rgba(242, 242, 243, 1)
 }
@@ -46,6 +47,10 @@
 
 .close::after {
 	transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.close:only-child {
+	margin-left: auto;
 }
 
 .title {

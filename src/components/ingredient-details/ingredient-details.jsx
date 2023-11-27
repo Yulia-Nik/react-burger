@@ -1,11 +1,11 @@
-import PropTypes from 'prop-types';
+import { ingredientType } from '../../utils/types';
 
 import styles from './ingredient-details.module.css';
 
 const IngredientDetails = ({ingredient}) => {
 	return (
 		<div className={styles.container}>
-			<img alt={ingredient.alt} src={ingredient.image} />
+			<img alt={ingredient.alt} src={ingredient.image_large} />
 			<div className={styles.name}>{ingredient.name}</div>
 			<div className={styles.energyValue}>
 				<div className={styles.valueItem}>
@@ -29,14 +29,6 @@ const IngredientDetails = ({ingredient}) => {
 	);
 };
 
-IngredientDetails.propTypes = {
-	alt: PropTypes.string,
-	image: PropTypes.string,
-	name: PropTypes.string,
-	calories: PropTypes.number,
-	fat: PropTypes.number,
-	proteins: PropTypes.number,
-	carbohydrates: PropTypes.number,
-}
+IngredientDetails.propTypes = ingredientType;
 
 export default IngredientDetails;

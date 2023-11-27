@@ -3,10 +3,10 @@ import HeaderMenuLink from '../header-menu-link/header-menu-link';
 
 import styles from './app-header.module.css';
 
-const AppHeader = () => {
+const AppHeader = ({extraClass = ''}) => {
 	return (
 		<header className={styles.header}>
-			<div className={styles.headerMenu}>
+			<div className={`${styles.headerMenu}${extraClass ? ` ${extraClass}` : ''}`}>
 				<div className={styles.headerMenuItem}>
 					<div className={styles.headerMenuGroup}>
 						<HeaderMenuLink title="Конструктор">

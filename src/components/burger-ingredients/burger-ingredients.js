@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
 import Tabs from '../tabs/tabs';
 import IngredientsGroup from '../ingredients-group/ingredients-group';
 import Modal from '../../components/modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+
+import useModal from '../../hooks/useModal';
 
 import styles from './burger-ingredients.module.css';
 
@@ -25,41 +26,37 @@ const getIngredientsGroupTitle = key => {
 };
 
 const BurgerIngredients = props => {
-	const [currentIngredient, setCurrentIngredient] = useState(null);
-
-	const handleModalClose = () => {
-		setCurrentIngredient(null);
-	};
+	const { isModalOpen, openModal, closeModal } = useModal();
 
 	return (
-		<section className="content-column">
+		<section className={props.extraClass}>
 			<Tabs />
 			<div className={styles.ingredientsContainer}>
 				{props.ingredients.bun.length && (
 					<IngredientsGroup
 						title={getIngredientsGroupTitle('bun')}
 						data={props.ingredients.bun}
-						onSelect={setCurrentIngredient}
+						onSelect={openModal}
 					/>
 				)}
 				{props.ingredients.main.length && (
 					<IngredientsGroup
 						title={getIngredientsGroupTitle('main')}
 						data={props.ingredients.main}
-						onSelect={setCurrentIngredient}
+						onSelect={openModal}
 					/>
 				)}
 				{props.ingredients.sauce.length && (
 					<IngredientsGroup
 						title={getIngredientsGroupTitle('sauce')}
 						data={props.ingredients.sauce}
-						onSelect={setCurrentIngredient}
+						onSelect={openModal}
 					/>
 				)}
 			</div>
-			{currentIngredient && (
-				<Modal onClose={handleModalClose}>
-					<IngredientDetails ingredient={currentIngredient} />
+			{isModalOpen && (
+				<Modal title="Детали ингредиента" onClose={closeModal}>
+					<IngredientDetails ingredient={isModalOpen} />
 				</Modal>
 			)}
 		</section>
@@ -68,6 +65,7 @@ const BurgerIngredients = props => {
 
 BurgerIngredients.propTypes = {
 	ingredients: PropTypes.object,
+	extraClass: PropTypes.string,
 };
 
 export default BurgerIngredients;

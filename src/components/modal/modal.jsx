@@ -4,9 +4,23 @@ import ModalBody from './part/modal-body/modal-body';
 import ModalOverlay from './part/modal-overlay/modal-overlay';
 
 import styles from './modal.module.css';
+import { useEffect } from 'react';
 
 const Modal = ({title, children, onClose}) => {
 	const modalRoot = document.getElementById('modal-root');
+
+	useEffect(() => {
+		const closeByEscape = event => {
+			if (event.key === 'Escape') {
+				onClose();
+			}
+		};
+		document.addEventListener('keydown', closeByEscape);
+
+		return () => {
+			document.removeEventListener('keydown', closeByEscape);
+		};
+	}, [onClose]);
 
 	return createPortal(
 		<div className={styles.wrap}>

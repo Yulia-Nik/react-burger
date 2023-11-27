@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import { DragIcon, LockIcon, DeleteIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Price from '../../components/price/price';
+import { ingredientType } from '../../utils/types';
 
 import styles from './constructor-part.module.css';
 
-const ConstructorPart = ({ingredient}) => {
-	const extremeClass = ingredient.type !== 'bun' ? '' : ingredient?.index ? styles.lastIngredient : styles.firstIngredient;
+const ConstructorPart = ({ingredient, index}) => {
+	const extremeClass = ingredient.type !== 'bun' ? '' : index > 0 ? styles.lastIngredient : styles.firstIngredient;
 
 	return (
 		<div className={`${styles.wrap} ${ingredient.additionalClass ? ingredient.additionalClass : ''}`}>
@@ -36,13 +37,8 @@ const ConstructorPart = ({ingredient}) => {
 };
 
 ConstructorPart.propTypes = {
-	type: PropTypes.string,
+	ingredient: PropTypes.shape({...ingredientType}),
 	index: PropTypes.number,
-	additionalClass: PropTypes.string,
-	alt: PropTypes.string,
-	image: PropTypes.string,
-	name: PropTypes.string,
-	price: PropTypes.number,
 };
 
 export default ConstructorPart;

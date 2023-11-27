@@ -1,5 +1,9 @@
 .header {
-	padding: 24px;
+	padding: 16px;
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
 	background: rgba(28, 28, 33, 1);
 }
 

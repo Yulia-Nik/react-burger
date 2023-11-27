@@ -4,21 +4,23 @@
 	font-family: 'Jet Brains Mono', Arial, sans-serif;
 }
 
-.content-container {
-	max-width: 1288px;
+.content {
+	margin: 0 auto;
+	max-width: 1280px;
 }
 
-.relative-block {
-	position: relative;
+.mainContent {
+	margin-top: 90px;
 }
 
-.main-content {
+.row {
+	height: calc(100vh - 235px);
 	display: flex;
 	justify-content: space-between;
 	gap: 40px;
 }
 
-.content-column {
+.column {
 	width: 50%;
 }
 
