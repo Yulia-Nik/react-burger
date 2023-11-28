@@ -21,7 +21,7 @@ const IngredientCard = ({ingredient, count, onSelect}) => {
 };
 
 IngredientCard.propTypes = {
-	ingredient: PropTypes.shape({...ingredientType}),
+	ingredient: ingredientType,
 	count: PropTypes.number,
 	onSelect: PropTypes.func,
 };

@@ -21,8 +21,10 @@ const BurgerConstructor = ({extraClass}) => {
 						<ConstructorPart
 							ingredient={{
 								...bunData,
-								name: `${bunData.name} (верх)`
+								name: `${bunData.name} (верх)`,
 							}}
+							type="top"
+							isLocked={true}
 						/>
 					</li>
 					<li className={`${styles.gropItem} mt-4 mb-4`}>
@@ -42,8 +44,9 @@ const BurgerConstructor = ({extraClass}) => {
 								...bunData,
 								name: `${bunData.name} (низ)`
 							}}
-							index={4}
-						/> {/* index появится при переборе массива ингредиентов */}
+							type="bottom"
+							isLocked={true}
+						/>
 					</li>
 				</ul>
 				<div className={styles.footer}>
