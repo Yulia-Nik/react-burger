@@ -1,0 +1,25 @@
+.container {
+	text-align: center;
+}
+
+.name {
+	margin-bottom: 32px;
+	font-size: 24px;
+}
+
+.energyValue {
+	padding: 0 60px;
+	display: flex;
+	justify-content: space-between;
+	gap: 20px;
+	color: rgba(133, 133, 173, 1);
+}
+
+.unit {
+	font-size: 16px;
+}
+
+.value {
+	font-family: 'Iceland', Arial, sans-serif;
+	font-size: 28px;
+}

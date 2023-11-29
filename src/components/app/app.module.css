@@ -1,0 +1,46 @@
+.app {
+	background: #131316;
+	color: #ffffff;
+	font-family: 'Jet Brains Mono', Arial, sans-serif;
+}
+
+.content {
+	margin: 0 auto;
+	max-width: 1280px;
+}
+
+.mainContent {
+	margin-top: 90px;
+}
+
+.row {
+	height: calc(100vh - 235px);
+	display: flex;
+	justify-content: space-between;
+	gap: 40px;
+}
+
+.column {
+	width: 50%;
+}
+
+h1 {
+	margin: 0;
+	font-size: 36px;
+	font-weight: 700;
+}
+
+*:-webkit-scrollbar-track {
+	border-radius: 3px;
+	background-color: rgba(47, 47, 55, 1);
+}
+
+*::-webkit-scrollbar {
+	width: 8px;
+	background-color: rgba(47, 47, 55, 1);
+}
+
+*::-webkit-scrollbar-thumb {
+	height: 105px;
+	background-color: rgba(133, 133, 173, 1);
+}

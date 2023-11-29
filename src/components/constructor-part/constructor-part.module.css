@@ -1,0 +1,12 @@
+.wrap {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 20px;
+	gap: 8px;
+	padding: 0 8px;
+}
+
+.element:only-child {
+	margin: 0 8px 0 auto;
+}

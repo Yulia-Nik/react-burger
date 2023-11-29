@@ -1,0 +1,5 @@
+.ingredientsContainer {
+	padding: 0 8px;
+	height: calc(100% - 96px);
+	overflow-y: scroll;
+}

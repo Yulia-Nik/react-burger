@@ -1,0 +1,11 @@
+.list {
+	padding: 0;
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+.ingredientItem {
+	width: calc(50% - 12px);
+	list-style-type: none;
+}

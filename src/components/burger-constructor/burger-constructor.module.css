@@ -1,0 +1,26 @@
+.list {
+	padding: 0;
+	list-style-type: none;
+}
+
+.group {
+	composes: list;
+	height: calc(100% - 96px);
+}
+
+.gropItem {
+	height: calc(100% - 192px);
+}
+
+.scrollList {
+	composes: list;
+	height: 100%;
+	overflow-y: scroll;
+}
+
+.footer {
+	padding: 20px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
