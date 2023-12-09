@@ -10,3 +10,7 @@
 .element:only-child {
 	margin: 0 8px 0 auto;
 }
+
+.emptyContainer {
+	text-align: center;
+}

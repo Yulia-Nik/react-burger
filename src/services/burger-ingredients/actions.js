@@ -1,0 +1,5 @@
+export const ADD_FILLING = 'ADD_FILLING';
+
+export const ADD_BUN = 'ADD_BUN';
+
+export const DELETE_BURGER_INGREDIENT = 'DELETE_BURGER_INGREDIENT';

@@ -10,7 +10,7 @@ const IngredientsGroup = props => {
 			<ul className={styles.list}>
 				{props.data.map(ingredient =>
 					<li className={styles.ingredientItem} key={ingredient._id}>
-						<IngredientCard ingredient={ingredient} count={1} onSelect={props.onSelect} />
+						<IngredientCard ingredient={ingredient} onSelect={props.onSelect} />
 					</li>
 				)}
 			</ul>

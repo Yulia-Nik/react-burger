@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import Tabs from '../tabs/tabs';
 import IngredientsGroup from '../ingredients-group/ingredients-group';
 import Modal from '../../components/modal/modal';
@@ -26,30 +27,34 @@ const getIngredientsGroupTitle = key => {
 };
 
 const BurgerIngredients = props => {
+	const { ingredients } = useSelector(store => ({
+		ingredients: store.ingredients.ingredients
+	}));
+
 	const { isModalOpen, openModal, closeModal } = useModal();
 
 	return (
 		<section className={props.extraClass}>
 			<Tabs />
 			<div className={styles.ingredientsContainer}>
-				{props.ingredients.bun.length && (
+				{ingredients.bun.length && (
 					<IngredientsGroup
 						title={getIngredientsGroupTitle('bun')}
-						data={props.ingredients.bun}
+						data={ingredients.bun}
 						onSelect={openModal}
 					/>
 				)}
-				{props.ingredients.main.length && (
+				{ingredients.main.length && (
 					<IngredientsGroup
 						title={getIngredientsGroupTitle('main')}
-						data={props.ingredients.main}
+						data={ingredients.main}
 						onSelect={openModal}
 					/>
 				)}
-				{props.ingredients.sauce.length && (
+				{ingredients.sauce.length && (
 					<IngredientsGroup
 						title={getIngredientsGroupTitle('sauce')}
-						data={props.ingredients.sauce}
+						data={ingredients.sauce}
 						onSelect={openModal}
 					/>
 				)}
