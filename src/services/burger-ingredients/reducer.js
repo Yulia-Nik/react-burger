@@ -3,6 +3,8 @@ import {
 	ADD_FILLING,
 	ADD_BUN,
 	DELETE_BURGER_INGREDIENT,
+	DELETE_ALL_BURGER_INGREADIENTS,
+	UPDATE_FILLING_INGREDIENTS,
 } from './actions';
 
 const initialState = {
@@ -44,6 +46,22 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
 					filling: state.burgerIngredients.filling.filter(el => el.ingredientId !== action.payload.ingredientId)
 				},
 			};
+		case DELETE_ALL_BURGER_INGREADIENTS:
+			return {
+				...state,
+				burgerIngredients: initialState.burgerIngredients,
+			};
+		case UPDATE_FILLING_INGREDIENTS: {
+			const updateFilling = [...state.burgerIngredients.filling];
+			updateFilling.splice(action.payload.hoverIndex, 0, updateFilling.splice(action.payload.dragIndex, 1)[0]);
+			return {
+				...state,
+				burgerIngredients: {
+					...state.burgerIngredients,
+					filling: updateFilling
+				}
+			};
+		}
 		default:
 			return state;
 	};

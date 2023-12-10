@@ -1,4 +1,4 @@
-import { formatIngredientsData } from '../../utils/utils';
+import { formatIngredientsData } from '../../utils/data-utils';
 import {
 	GET_INGREDIENTS_LIST,
 	GET_INGREDIENTS_LIST_SUCCESS,

@@ -33,7 +33,7 @@ export const formatIngredientsData = data => {
 };
 
 /**
- * Преобразует массив ингредиентов в объект с группировкой компонентов бургера: булка и начинка
+ * Возвращает количество конкретного ингредиента в бургере
  * 
  * @param {String} type - тип ингредиента: булка (bun) или другие (filling)
  * @param {String} id - id ингредиента
@@ -48,4 +48,36 @@ export const getIngredientCount = (type, id, burgerIngredients) => {
 	} else {
 		return burgerIngredients.filling.filter(el => el._id === id).length;
 	}
+};
+
+/**
+ * Вычисляет стоимость собранного бургера
+ * 
+ * @param {Object} burgerIngredients - объект ингредиентов бургера
+ * @returns {number}
+ */
+export const getBurgerPrice = burgerIngredients => {
+	let price = burgerIngredients.bun ? 2 * burgerIngredients.bun.price : 0;
+	burgerIngredients.filling.forEach(ingredient => {
+		price += ingredient.price;
+	});
+
+	return price;
+};
+
+
+/**
+ * Возвращает массив ингредиентов для отправки запроса создания заказа
+ * 
+ * @param {Object} data - объект ингредиентов бургера
+ * @returns {Array}
+ */
+ export const getOrderDataForRequest = data => {
+	const result = data.bun ? [data.bun._id] : [];
+	data.filling.forEach(el => {
+		result.push(el._id);
+	});
+	result.push(data.bun._id);
+
+	return result;
 };

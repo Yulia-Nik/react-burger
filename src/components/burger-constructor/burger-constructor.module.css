@@ -12,12 +12,6 @@
 	max-height: calc(100% - 192px);
 }
 
-.scrollList {
-	composes: list;
-	height: 100%;
-	overflow-y: scroll;
-}
-
 .footer {
 	padding: 20px;
 	display: flex;
