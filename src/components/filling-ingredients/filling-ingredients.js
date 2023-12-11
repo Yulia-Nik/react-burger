@@ -33,7 +33,7 @@ const FillingIngredients = () => {
 				moveCard={moveCard}
 			/>
 		)
-	}, [])
+	}, [burgerIngredients.filling])
 
 	return (
 		<ul className={styles.scrollList}>

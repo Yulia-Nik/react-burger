@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
+import React from 'react';
 import IngredientCard from '../ingredient-card/ingredient-card'
 
 import styles from './ingredients-group.module.css';
 
-const IngredientsGroup = props => {
+const IngredientsGroup = React.forwardRef((props, ref) => {
 	return (
-		<div className="mb-2">
+		<div className="mb-2" ref={ref}>
 			<h2>{props.title}</h2>
 			<ul className={styles.list}>
 				{props.data.map(ingredient =>
@@ -16,7 +17,7 @@ const IngredientsGroup = props => {
 			</ul>
 		</div>
 	)
-};
+});
 
 IngredientsGroup.propTypes = {
 	title: PropTypes.string,
