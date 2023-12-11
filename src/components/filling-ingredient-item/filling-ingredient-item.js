@@ -10,7 +10,7 @@ const FillingIngredientItem = ({index, id, ingredient, extraClass, moveCard}) =>
 			handlerId: monitor.getHandlerId(),
 			isOver: monitor.isOver(),
 		}),
-		hover(item, monitor) {
+		hover(item) {
 			if (!ref.current) {
 				return;
 			}
@@ -21,22 +21,9 @@ const FillingIngredientItem = ({index, id, ingredient, extraClass, moveCard}) =>
 				return;
 			}
 
-			// Лишнее?
-			// const hoverBoundingRect = ref.current?.getBoundingClientRect();
-			// const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-			// const clientOffset = monitor.getClientOffset();
-			// const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-			// if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-			// 	return;
-			// }
-
-			// if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-			// 	return;
-			// }
-
 			moveCard(dragIndex, hoverIndex);
 
-			item.index = hoverIndex
+			item.index = hoverIndex;
 		}
 	});
 	const [{ isDragging }, dragRef] = useDrag({
@@ -45,7 +32,7 @@ const FillingIngredientItem = ({index, id, ingredient, extraClass, moveCard}) =>
 			return { id, index }
 		},
 		collect: monitor => ({
-			isDragging: id === monitor.getItem()?.id, // или monitor.isDragging() ?
+			isDragging: id === monitor.getItem()?.id,
 		}),
 	});
 	dragRef(dropRef(ref));

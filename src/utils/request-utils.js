@@ -5,5 +5,3 @@ export const getResponse = res => {
 
 	return Promise.reject(`Ошибка ${res.status}`);
 };
-
-

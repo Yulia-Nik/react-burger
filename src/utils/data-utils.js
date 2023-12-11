@@ -65,7 +65,6 @@ export const getBurgerPrice = burgerIngredients => {
 	return price;
 };
 
-
 /**
  * Возвращает массив ингредиентов для отправки запроса создания заказа
  * 
