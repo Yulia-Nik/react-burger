@@ -29,6 +29,7 @@ export const orderReducer = (state = initialState, action) => {
 			return {
 				...state,
 				isLoading: false,
+				order: null,
 				error: action.payload,
 			};
 		case CLEAR_ORDER_INFO:
@@ -37,7 +38,7 @@ export const orderReducer = (state = initialState, action) => {
 				isLoading: false,
 				order: null,
 				error: null,
-			}
+			};
 		default:
 			return state;
 	};
