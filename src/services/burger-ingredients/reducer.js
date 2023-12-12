@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import {
 	ADD_FILLING,
 	ADD_BUN,
@@ -23,10 +22,7 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
 					...state.burgerIngredients,
 					filling: [
 						...state.burgerIngredients.filling,
-						{
-							...action.payload,
-							ingredientId: uuidv4(),
-						},
+						action.payload,
 					],
 				},
 			};

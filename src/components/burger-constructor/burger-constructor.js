@@ -9,7 +9,7 @@ import FillingIngredients from '../filling-ingredients/filling-ingredients';
 import Price from '../price/price';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { ADD_FILLING, ADD_BUN, DELETE_ALL_BURGER_INGREADIENTS } from '../../services/burger-ingredients/actions';
+import { ADD_BUN, DELETE_ALL_BURGER_INGREADIENTS, addFillingIngridient } from '../../services/burger-ingredients/actions';
 import { createOrder, CLEAR_ORDER_INFO } from '../../services/order/actions';
 import { getBurgerPrice, getOrderDataForRequest } from '../../utils/data-utils';
 
@@ -67,10 +67,9 @@ const BurgerConstructor = ({extraClass}) => {
 			isHoverFilling: monitor.isOver(),
 		}),
 		drop(item) {
-			dispatch({
-				type: ADD_FILLING,
-				payload: ingredients[item.type].filter(el => el._id === item.id)[0],
-			});
+			dispatch(
+				addFillingIngridient(ingredients[item.type].filter(el => el._id === item.id)[0])
+			);
 		},
 	});
 

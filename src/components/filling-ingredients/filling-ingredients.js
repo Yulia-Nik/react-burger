@@ -25,7 +25,7 @@ const FillingIngredients = () => {
 	const renderCard = useCallback((ingredient, index) => {
 		return (
 			<FillingIngredientItem
-				key={index}
+				key={ingredient.ingredientId}
 				index={index}
 				id={ingredient.ingredientId}
 				ingredient={ingredient}

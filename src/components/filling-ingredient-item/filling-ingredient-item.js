@@ -32,7 +32,7 @@ const FillingIngredientItem = ({index, id, ingredient, extraClass, moveCard}) =>
 			return { id, index }
 		},
 		collect: monitor => ({
-			isDragging: id === monitor.getItem()?.id,
+			isDragging: monitor.isDragging(),
 		}),
 	});
 	dragRef(dropRef(ref));

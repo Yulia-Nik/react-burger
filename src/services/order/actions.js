@@ -1,4 +1,5 @@
 import { getResponse } from '../../utils/request-utils';
+import { BASE_URL } from '../../utils/constants';
 
 export const CREATE_ORDER = 'CREATE_ORDER';
 
@@ -7,8 +8,6 @@ export const CREATE_ORDER_SUCCESS = 'CREATE_ORDER_SUCCESS';
 export const CREATE_ORDER_FAILED = 'CREATE_ORDER_FAILED';
 
 export const CLEAR_ORDER_INFO = 'CLEAR_ORDER_INFO';
-
-const CREATE_ORDER_REQUEST_URL = ' https://norma.nomoreparties.space/api/orders';
 
 /**
  * Отправляет и обрабатыват запрос на создание заказа
@@ -22,7 +21,7 @@ export const createOrder = data => {
 			type: CREATE_ORDER,
 		});
 
-		fetch(CREATE_ORDER_REQUEST_URL, {
+		fetch(`${BASE_URL}orders`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json;charset=utf-8'

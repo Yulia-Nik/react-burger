@@ -1,4 +1,5 @@
 import { getResponse } from '../../utils/request-utils';
+import { BASE_URL } from '../../utils/constants';
 
 export const GET_INGREDIENTS_LIST = 'GET_INGREDIENTS_LIST';
 
@@ -6,15 +7,13 @@ export const GET_INGREDIENTS_LIST_SUCCESS = 'GET_INGREDIENTS_LIST_SUCCESS';
 
 export const GET_INGREDIENTS_LIST_FAILED = 'GET_INGREDIENTS_LIST_FAILED';
 
-const INGREDIENTS_REQUEST_URL = 'https://norma.nomoreparties.space/api/ingredients';
-
 export const getIngredients = () => {
 	return (dispatch) => {
 		dispatch({
 			type: GET_INGREDIENTS_LIST,
 		});
 
-		fetch(INGREDIENTS_REQUEST_URL)
+		fetch(`${BASE_URL}ingredients`)
 			.then(res => getResponse(res))
 			.then(res => {
 				if (res.success) {
