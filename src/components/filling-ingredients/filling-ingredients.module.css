@@ -1,0 +1,6 @@
+.scrollList {
+	padding: 0;
+	list-style-type: none;
+	height: 100%;
+	overflow-y: scroll;
+}

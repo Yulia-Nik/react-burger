@@ -1,54 +1,43 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector, Provider } from 'react-redux';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import Loader from '../loader/loader';
 import AppHeader from '../app-header/app-header';
+import { store } from '../../services/store';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import { formatIngredientsData } from '../../utils/utils';
+import { getIngredients } from '../../services/ingredients/actions';
 
 import styles from './app.module.css';
 
-const INGREDIENTS_REQUEST_URL = 'https://norma.nomoreparties.space/api/ingredients';
-
 function App() {
-	const [isLoading, setIsLoading] = useState(true);
-	const [ingredientsData, setIngredientsData] = useState([]);
+	const dispatch = useDispatch();
+	const { ingredients, isLoading, error } = useSelector(store => store.ingredients);
 
-	useEffect(() => {
-		fetch(INGREDIENTS_REQUEST_URL)
-			.then(res => {
-				if (res.ok) {
-					return res.json();
-				}
-				return Promise.reject(`Ошибка ${res.status}`);
-			})
-			.then(res => {
-				if (res.success) {
-					setIngredientsData(res.data);
-				} else {
-					throw new Error('Ошибка при получении данных');
-				}
-			})
-			.catch(err => console.error(`Произошла ошибка: ${err}`))
-			.finally(() => setIsLoading(false));
-	}, []);
+	useEffect(() => dispatch(getIngredients()), []);
 
 	return (
 		<div className={styles.app}>
-			<AppHeader extraClass={styles.content} />
-			{isLoading && (
-				<Loader />
-			)}
-			{!isLoading && ingredientsData.length > 0 && (
-				<main className={`pt-10 pb-10 pl-6 pr-6 ${styles.content} ${styles.mainContent}`}>
-					<h1 className="pl-5 pr-5 mb-5">
-						Соберите бургер
-					</h1>
-					<div className={styles.row}>
-						<BurgerIngredients extraClass={styles.column} ingredients={formatIngredientsData(ingredientsData)} />
-						<BurgerConstructor extraClass={styles.column} />
-					</div>
-				</main>
-			)}
+			<Provider store={store}>
+				<AppHeader extraClass={styles.content} />
+				{isLoading && (
+					<Loader />
+				)}
+				{!isLoading && ingredients && (
+					<main className={`pt-10 pb-10 pl-6 pr-6 ${styles.content} ${styles.mainContent}`}>
+						<h1 className="pl-5 pr-5 mb-5">
+							Соберите бургер
+						</h1>
+						<DndProvider backend={HTML5Backend}>
+							<div className={styles.row}>
+								<BurgerIngredients extraClass={styles.column} />
+								<BurgerConstructor extraClass={styles.column} />
+							</div>
+						</DndProvider>
+					</main>
+				)}
+			</Provider>
 		</div>
 	);
 }

@@ -10,3 +10,10 @@
 .element:only-child {
 	margin: 0 8px 0 auto;
 }
+
+.emptyContainer {
+	margin: 0 8px 0 auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

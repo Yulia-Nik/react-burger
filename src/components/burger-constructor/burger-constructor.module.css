@@ -6,16 +6,12 @@
 .group {
 	composes: list;
 	height: calc(100% - 96px);
+	display: flex;
+	flex-direction: column;
 }
 
 .gropItem {
-	height: calc(100% - 192px);
-}
-
-.scrollList {
-	composes: list;
-	height: 100%;
-	overflow-y: scroll;
+	max-height: calc(100% - 192px);
 }
 
 .footer {

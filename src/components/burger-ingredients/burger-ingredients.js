@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types';
+import { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import Tabs from '../tabs/tabs';
 import IngredientsGroup from '../ingredients-group/ingredients-group';
-import Modal from '../../components/modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
-
-import useModal from '../../hooks/useModal';
 
 import styles from './burger-ingredients.module.css';
 
@@ -26,39 +24,75 @@ const getIngredientsGroupTitle = key => {
 };
 
 const BurgerIngredients = props => {
-	const { isModalOpen, openModal, closeModal } = useModal();
+	const { ingredients } = useSelector(store => ({
+		ingredients: store.ingredients.ingredients
+	}));
+
+	const [activeTab, setActiveTab] = useState(1);
+
+	const listRef = useRef(null);
+	const bunRef = useRef(null);
+	const mainRef = useRef(null);
+	const sauceRef = useRef(null);
+
+	const getActiveTabNumber = () => {
+		const { current: listCurrent } = listRef;
+		const { current: bunCurrent } = bunRef;
+		const { current: mainCurrent } = mainRef;
+		const { current: sauceCurrent } = sauceRef;
+		const group = [
+			bunCurrent,
+			mainCurrent,
+			sauceCurrent,
+		];
+		const tabY = listCurrent.getBoundingClientRect().top;
+		let difference = [];
+		group.forEach(el => {
+			const top = el.getBoundingClientRect().top;
+			difference.push(Math.abs(top - tabY));
+		});
+		const minValue = Math.min.apply(null, difference);
+		const resultIndex = difference.indexOf(minValue) + 1;
+
+		return resultIndex;
+	};
+
+	const handleScroll = () => {
+		const currentActiveTab = getActiveTabNumber();
+		setActiveTab(currentActiveTab);
+	};
+
+	useEffect(() => {
+		const { current } = listRef;
+		current?.addEventListener('scroll', handleScroll);
+	});
 
 	return (
 		<section className={props.extraClass}>
-			<Tabs />
-			<div className={styles.ingredientsContainer}>
-				{props.ingredients.bun.length && (
+			<Tabs current={activeTab} />
+			<div className={styles.ingredientsContainer} ref={listRef}>
+				{ingredients.bun.length && (
 					<IngredientsGroup
 						title={getIngredientsGroupTitle('bun')}
-						data={props.ingredients.bun}
-						onSelect={openModal}
+						data={ingredients.bun}
+						ref={bunRef}
 					/>
 				)}
-				{props.ingredients.main.length && (
+				{ingredients.main.length && (
 					<IngredientsGroup
 						title={getIngredientsGroupTitle('main')}
-						data={props.ingredients.main}
-						onSelect={openModal}
+						data={ingredients.main}
+						ref={mainRef}
 					/>
 				)}
-				{props.ingredients.sauce.length && (
+				{ingredients.sauce.length && (
 					<IngredientsGroup
 						title={getIngredientsGroupTitle('sauce')}
-						data={props.ingredients.sauce}
-						onSelect={openModal}
+						data={ingredients.sauce}
+						ref={sauceRef}
 					/>
 				)}
 			</div>
-			{isModalOpen && (
-				<Modal title="Детали ингредиента" onClose={closeModal}>
-					<IngredientDetails ingredient={isModalOpen} />
-				</Modal>
-			)}
 		</section>
 	);
 };
