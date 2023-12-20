@@ -1,0 +1,19 @@
+.content {
+	margin: 0 auto;
+	max-width: 1280px;
+}
+
+.mainContent {
+	margin-top: 90px;
+}
+
+.row {
+	height: calc(100vh - 235px);
+	display: flex;
+	justify-content: space-between;
+	gap: 40px;
+}
+
+.column {
+	width: 50%;
+}

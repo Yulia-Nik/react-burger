@@ -1,0 +1,17 @@
+.content {
+	height: 100vh;
+	display: flex;
+}
+
+.title {
+	margin: auto;
+	font-size: 34px;
+	font-weight: 500;
+}
+
+.image {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	height: 70vh;
+}
