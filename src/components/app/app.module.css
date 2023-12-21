@@ -13,17 +13,6 @@
 	margin-top: 90px;
 }
 
-.row {
-	height: calc(100vh - 235px);
-	display: flex;
-	justify-content: space-between;
-	gap: 40px;
-}
-
-.column {
-	width: 50%;
-}
-
 h1 {
 	margin: 0;
 	font-size: 36px;
