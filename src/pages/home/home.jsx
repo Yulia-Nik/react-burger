@@ -21,7 +21,7 @@ const Home = () => {
 				<Loader />
 			)}
 			{!isLoading && ingredients && (
-				<>
+				<section>
 					<h1 className="pl-5 pr-5 mb-5">
 						Соберите бургер
 					</h1>
@@ -31,7 +31,7 @@ const Home = () => {
 							<BurgerConstructor extraClass={styles.column} />
 						</div>
 					</DndProvider>
-				</>
+				</section>
 			)}
 		</>
 	);

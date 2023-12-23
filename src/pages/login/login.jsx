@@ -5,7 +5,7 @@ import FormFooter from '../../components/form-footer/form-footer';
 const additionalContent = (
 	<>
 		<FormFooter text="Вы — новый пользователь?" linkText="Зарегистрироваться" path="/register" />
-		<FormFooter text="Забыли пароль?" linkText="Восстановить пароль" path="/" />
+		<FormFooter text="Забыли пароль?" linkText="Восстановить пароль" path="/forgot-password" />
 	</>
 );
 

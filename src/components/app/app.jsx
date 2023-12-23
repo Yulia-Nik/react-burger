@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import AppHeader from '../app-header/app-header';
@@ -9,11 +10,16 @@ import {
 	Register,
 	ForgotPassword,
 	ResetPassword,
+	Profile,
 } from '../../pages';
+import { checkUserAuth } from '../../services/auth/actions';
 
 import styles from './app.module.css';
 
 function App() {
+	useEffect(() => {
+		checkUserAuth();
+	}, []);
 
 	return (
 		<div className={styles.app}>
@@ -28,6 +34,7 @@ function App() {
 						<Route path="/register" element={<Register />} />
 						<Route path="/forgot-password" element={<ForgotPassword />} />
 						<Route path="/reset-password" element={<ResetPassword />} />
+						<Route path="/profile" element={<Profile />} />
 					</Routes>
 				</main>
 			</Provider>

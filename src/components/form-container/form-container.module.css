@@ -1,9 +1,12 @@
 .container {
-	margin: 140px auto;
 	display: flex;
 	flex-direction: column;
 	max-width: 480px;
 	text-align: center;
+}
+
+.centerContainer {
+	margin: 140px auto;
 }
 
 .form {
