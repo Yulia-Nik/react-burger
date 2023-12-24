@@ -7,6 +7,8 @@ export const GET_USER = 'GET_USER';
 
 export const SET_USER = 'SET_USER';
 
+export const DELETE_USER = 'DELETE_USER';
+
 export const setAuthChecked = value => ({
 	type: SET_AUTH_CHECKED,
 	payload: value,
@@ -24,19 +26,3 @@ export const setUser = user => ({
 	type: SET_USER,
 	payload: user,
 });
-
-export const checkUserAuth = () => {
-	return (dispatch) => {
-		if (localStorage.getItem(ACCESS_TOKEN_STORAGE_KEY)) {
-			dispatch(getUser())
-				.catch(() => {
-					localStorage.removeItem("accessToken");
-					localStorage.removeItem("refreshToken");
-					dispatch(setUser(null));
-				})
-				.finally(() => dispatch(setAuthChecked(true)));
-		} else {
-			dispatch(setAuthChecked(true));
-		}
-	};
-};

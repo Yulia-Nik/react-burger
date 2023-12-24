@@ -1,28 +1,13 @@
-import { BASE_URL } from './constants';
+import { BASE_URL, ACCESS_TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY } from './constants';
 import { getResponse } from './request-utils';
+import { setUser, setAuthChecked } from '../services/auth/actions';
 
-// export const getUser = () => {
-//     fetch(`${BASE_URL}ingredients`)
-// 			.then(res => getResponse(res))
-// 			.then(res => {
-// 				if (res.success) {
-// 					dispatch({
-// 						type: GET_INGREDIENTS_LIST_SUCCESS,
-// 						payload: res.data,
-// 					});
-// 				} else {
-// 					dispatch({
-// 						type: GET_INGREDIENTS_LIST_FAILED,
-// 						error: res,
-// 					});
-// 					throw new Error(`Ошибка ${res.status}`);
-// 				}
-// 			})
-// 			.catch(err => {
-// 				dispatch({
-// 					type: GET_INGREDIENTS_LIST_FAILED,
-// 					error: err,
-// 				});
-// 				console.error(`Произошла ошибка: ${err}`);
-// 			});
-// }
+export const checkUserAuth = user =>
+	dispatch => {
+		if (!user && localStorage.getItem(ACCESS_TOKEN_STORAGE_KEY)) {
+			localStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY);
+			localStorage.removeItem(REFRESH_TOKEN_STORAGE_KEY);
+			dispatch(setUser(null));
+		}
+		dispatch(setAuthChecked(true));
+	};

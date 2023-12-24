@@ -2,6 +2,7 @@ import {
 	GET_USER,
 	SET_USER,
 	SET_AUTH_CHECKED,
+	DELETE_USER,
 } from './actions';
 
 const initialState = {
@@ -22,6 +23,11 @@ export const authReducer = (state = initialState, action) => {
 			return {
 				...state,
 				user: action.payload,
+			};
+		case DELETE_USER:
+			return {
+				...state,
+				user: null,
 			};
 		default:
 			return state;

@@ -71,7 +71,7 @@ export const getBurgerPrice = burgerIngredients => {
  * @param {Object} data - объект ингредиентов бургера
  * @returns {Array}
  */
- export const getOrderDataForRequest = data => {
+export const getOrderDataForRequest = data => {
 	const result = data.bun ? [data.bun._id] : [];
 	data.filling.forEach(el => {
 		result.push(el._id);
@@ -79,4 +79,17 @@ export const getBurgerPrice = burgerIngredients => {
 	result.push(data.bun._id);
 
 	return result;
+};
+
+export const getIngredientById = (ingredients, id) => {
+	let targetIngredient = null;
+	Object.keys(ingredients).forEach(key => {
+		ingredients[key].forEach(elem => {
+			if (elem._id === id) {
+				targetIngredient = elem;
+			}
+		});
+	});
+
+	return targetIngredient;
 };

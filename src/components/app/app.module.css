@@ -12,6 +12,7 @@
 .mainContent {
 	margin-top: 90px;
 	display: flex;
+	justify-content: center;
 	gap: 60px;
 }
 

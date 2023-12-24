@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { Provider } from 'react-redux';
-import { Routes, Route } from 'react-router-dom';
+import { Provider, useDispatch, useSelector } from 'react-redux';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import AppHeader from '../app-header/app-header';
 import { store } from '../../services/store';
 import {
@@ -11,15 +11,39 @@ import {
 	ForgotPassword,
 	ResetPassword,
 	Profile,
+	Ingredients,
 } from '../../pages';
-import { checkUserAuth } from '../../services/auth/actions';
+import Modal from '../modal/modal';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import { checkUserAuth } from '../../utils/auth-utils';
+import { DELETE_CURRENT_INGREDIENT } from '../../services/current-ingredient/actions';
+import { OnlyAuth, OnlyUnAuth } from '../protected-route-element/protected-route-element';
 
 import styles from './app.module.css';
 
 function App() {
+	const dispatch = useDispatch();
+	const location = useLocation();
+	const { state } = location;
+	const currentIngredient = useSelector(store => store.currentIngredient.currentIngredient);
+	const navigate = useNavigate();
+
+	const handleCloseModal = () => {
+		dispatch({
+			type: DELETE_CURRENT_INGREDIENT
+		});
+
+		navigate('/', {replace: true});
+	};
+
+	// TODO: перепроверить работу
 	useEffect(() => {
-		checkUserAuth();
+		dispatch(checkUserAuth());
 	}, []);
+
+	useEffect(() => {
+		console.log(location);
+	}, [location]);
 
 	return (
 		<div className={styles.app}>
@@ -27,15 +51,26 @@ function App() {
 				<AppHeader extraClass={styles.content} />
 
 				<main className={`pt-10 pb-10 pl-6 pr-6 ${styles.content} ${styles.mainContent}`}>
-					<Routes>
+					<Routes location={state?.backgroundLocation || location}>
 						<Route path="/" element={<Home />} />
 						<Route path="*" element={<NonExistentPage />} />
-						<Route path="/login" element={<Login />} />
-						<Route path="/register" element={<Register />} />
-						<Route path="/forgot-password" element={<ForgotPassword />} />
-						<Route path="/reset-password" element={<ResetPassword />} />
-						<Route path="/profile" element={<Profile />} />
+						<Route path="/login" element={<OnlyUnAuth component={<Login />} />} />
+						<Route path="/register" element={<OnlyUnAuth component={<Register />} />} />
+						<Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPassword />} />} />
+						<Route path="/reset-password" element={<OnlyUnAuth component={<ResetPassword />} />} />
+						<Route path="/profile" element={<OnlyAuth component={<Profile />} />} />
+						<Route path="/ingredients/:id" element={<Ingredients />} />
 					</Routes>
+
+					{state?.backgroundLocation && (
+						<Routes>
+							<Route path="/ingredients/:id" element={(
+								<Modal title="Детали ингредиента" onClose={handleCloseModal}>
+									<IngredientDetails ingredient={currentIngredient} />
+								</Modal>
+							)} />
+						</Routes>
+					)}
 				</main>
 			</Provider>
 		</div>
