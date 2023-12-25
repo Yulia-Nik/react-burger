@@ -12,6 +12,7 @@ import {
 	ResetPassword,
 	Profile,
 	Ingredients,
+	Orders,
 } from '../../pages';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
@@ -41,10 +42,6 @@ function App() {
 		dispatch(checkUserAuth());
 	}, []);
 
-	useEffect(() => {
-		console.log(location);
-	}, [location]);
-
 	return (
 		<div className={styles.app}>
 			<Provider store={store}>
@@ -60,6 +57,7 @@ function App() {
 						<Route path="/reset-password" element={<OnlyUnAuth component={<ResetPassword />} />} />
 						<Route path="/profile" element={<OnlyAuth component={<Profile />} />} />
 						<Route path="/ingredients/:id" element={<Ingredients />} />
+						<Route path="/profile/orders" element={<OnlyAuth component={<Orders />} />} />
 					</Routes>
 
 					{state?.backgroundLocation && (

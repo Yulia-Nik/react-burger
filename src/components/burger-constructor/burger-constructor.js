@@ -21,10 +21,12 @@ const BurgerConstructor = ({extraClass}) => {
 		burgerIngredients,
 		ingredients,
 		order,
+		user,
 	} = useSelector(store => ({
 		burgerIngredients: store.burgerIngredients.burgerIngredients,
 		ingredients: store.ingredients.ingredients,
 		order: store.order.order,
+		user: store.auth.user,
 	}));
 
 	const burgerPrice = useMemo(() => {
@@ -32,8 +34,8 @@ const BurgerConstructor = ({extraClass}) => {
 	}, [burgerIngredients]);
 
 	const isActiveBtn = useMemo(() => {
-		return burgerIngredients.bun && burgerIngredients.filling.length;
-	}, [burgerIngredients]);
+		return user && burgerIngredients.bun && burgerIngredients.filling.length;
+	}, [burgerIngredients, user]);
 
 	const [{ isHoverUp }, upperDropRef] = useDrop({
 		accept: 'bun',

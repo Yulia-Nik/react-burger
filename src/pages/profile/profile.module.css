@@ -1,0 +1,9 @@
+.hidden.btns {
+	display: none;
+}
+
+.btns {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+}

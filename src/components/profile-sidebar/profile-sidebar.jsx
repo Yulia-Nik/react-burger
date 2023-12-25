@@ -1,8 +1,16 @@
+import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { logout } from '../../services/auth/actions';
 
 import styles from './profile-sidebar.module.css';
 
 const ProfileSidebar = () => {
+	const dispatch = useDispatch();
+
+	const handleLogout = () => {
+		dispatch(logout());
+	};
+
 	return (
 		<aside className={styles.sidebar}>
 			<ul className={styles.list}>
@@ -17,13 +25,13 @@ const ProfileSidebar = () => {
 				<li>
 					<NavLink
 						to="/profile/orders"
-						className={`${styles.link}`}
+						className={({isActive}) => isActive ? styles.activeLink : styles.link}
 					>
 						История заказов
 					</NavLink>
 				</li>
 				<li>
-					<NavLink className={`${styles.link}`}>Выход</NavLink>
+					<span className={`${styles.link}`} onClick={handleLogout}>Выход</span>
 				</li>
 			</ul>
 			<div className={`${styles.caption} mt-20`}>
