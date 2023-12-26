@@ -16,8 +16,8 @@ import {
 } from '../../pages';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import { checkUserAuth } from '../../utils/auth-utils';
 import { DELETE_CURRENT_INGREDIENT } from '../../services/current-ingredient/actions';
+import { checkUserAuth } from '../../services/auth/actions';
 import { OnlyAuth, OnlyUnAuth } from '../protected-route-element/protected-route-element';
 
 import styles from './app.module.css';

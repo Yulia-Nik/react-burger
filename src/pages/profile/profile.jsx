@@ -9,15 +9,30 @@ import styles from './profile.module.css';
 
 const Profile = () => {
 	const dispatch = useDispatch();
-	const inputNameRef = useRef(null);
-	const inputEmailRef = useRef(null);
 	const user = useSelector(store => store.auth.user);
-	const [name, setName] = useState('');
-	const [email, setEmail] = useState('');
+	const [name, setName] = useState(user.name);
+	const [email, setEmail] = useState(user.email);
+	const [password, setPassword] = useState(user?.password || '');
+	const nameInputRef = useRef(null);
 
 	const hasChange = useMemo(() => {
-		return name || email;
-	}, [name, email]);
+		return (
+			name !== user.name
+			|| email !== user.email
+			|| password
+		);
+	}, [name, email, password, user]);
+
+	const onIconClick = () => {
+		const { current } = nameInputRef;
+		current.disabled = false;
+		current.focus();
+	};
+
+	const handleOnBlur = () => {
+		const { current } = nameInputRef;
+		current.disabled = true;
+	};
 
 	const handleOnChange = event => {
 		switch (event.target.name) {
@@ -27,27 +42,26 @@ const Profile = () => {
 			case 'email':
 				setEmail(event.target.value);
 				break;
+			case 'password':
+				setPassword(event.target.value);
+				break;
 			default:
 				break;
 		};
 	};
 
 	const handleOnCancel = () => {
-		inputNameRef.current.value = user?.name || '';
-		inputEmailRef.current.value = user?.email || '';
-
-		setName('');
-		setEmail('');
+		setName(user.name);
+		setEmail(user.email);
+		setPassword('');
 	};
 
 	const handleOnSave = () => {
 		dispatch(updateUserInfo({
 			name: name || user.name,
 			email: email || user.email,
+			password: password || '',
 		}));
-
-		setName('');
-		setEmail('');
 	};
 
 	return(
@@ -58,25 +72,29 @@ const Profile = () => {
 					type={'text'}
 					placeholder="Имя"
 					name={'name'}
-					value={user?.name}
+					value={name}
 					icon={'EditIcon'}
-					ref={inputNameRef}
+					disabled={true}
+					ref={nameInputRef}
+					onIconClick={onIconClick}
 					onChange={handleOnChange}
+					onBlur={handleOnBlur}
+					extraClass={'input__textfield-disabled'}
 				/>
 				<EmailInput
-					value={user?.email}
-					placeholder="Логин"
+					value={email}
 					name={'email'}
-					icon={'EditIcon'}
-					ref={inputEmailRef}
+					placeholder="Логин"
+					isIcon={true}
+					extraClass="mb-2"
 					onChange={handleOnChange}
 				/>
 				<PasswordInput
-					onChange={handleOnChange}
-					value={''}
+					value={password}
 					placeholder="Пароль"
 					name={'password'}
 					icon={'EditIcon'}
+					onChange={handleOnChange}
 				/>
 				<div className={`${styles.btns} ${hasChange ? '' : styles.hidden}`}>
 					<Button htmlType="button" type="secondary" size="medium" extraClass="mr-5" onClick={handleOnCancel}>

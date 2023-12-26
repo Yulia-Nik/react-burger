@@ -1,5 +1,4 @@
 import {
-	GET_USER,
 	SET_USER,
 	SET_AUTH_CHECKED,
 } from './actions';
@@ -16,8 +15,6 @@ export const authReducer = (state = initialState, action) => {
 				...state,
 				isAuthChecked: action.payload,
 			};
-		case GET_USER:
-			return state.user;
 		case SET_USER:
 			return {
 				...state,

@@ -1,5 +1,5 @@
 import { getResponse } from '../../utils/request-utils';
-import { BASE_URL } from '../../utils/constants';
+import { BASE_URL, ACCESS_TOKEN_STORAGE_KEY } from '../../utils/constants';
 
 export const CREATE_ORDER = 'CREATE_ORDER';
 
@@ -24,7 +24,8 @@ export const createOrder = data => {
 		fetch(`${BASE_URL}orders`, {
 			method: 'POST',
 			headers: {
-				'Content-Type': 'application/json;charset=utf-8'
+				'Content-Type': 'application/json;charset=utf-8',
+				'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN_STORAGE_KEY),
 			},
 			body: JSON.stringify({ingredients: data})
 		})
