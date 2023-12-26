@@ -24,6 +24,7 @@ FormContaner.propTypes = {
 	title: PropTypes.string,
 	children: PropTypes.node,
 	additionalContent: PropTypes.node,
+	center: PropTypes.bool,
 };
 
 export default FormContaner;

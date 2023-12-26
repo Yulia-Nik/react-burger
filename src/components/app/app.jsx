@@ -37,7 +37,6 @@ function App() {
 		navigate('/', {replace: true});
 	};
 
-	// TODO: перепроверить работу
 	useEffect(() => {
 		dispatch(checkUserAuth());
 	}, []);

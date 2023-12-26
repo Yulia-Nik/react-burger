@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -43,6 +44,10 @@ const AppHeader = ({extraClass = ''}) => {
 			</div>
 		</header>
 	);
+};
+
+AppHeader.propTypes = {
+	extraClass: PropTypes.string,
 };
 
 export default AppHeader;
