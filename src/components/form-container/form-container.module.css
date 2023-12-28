@@ -1,0 +1,22 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	max-width: 480px;
+	text-align: center;
+}
+
+.centerContainer {
+	margin: 140px auto;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 24px;
+}
+
+.additional {
+	font-size: 16px;
+	line-height: 1.5;
+}

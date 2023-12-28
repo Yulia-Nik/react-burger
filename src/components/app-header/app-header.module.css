@@ -32,3 +32,21 @@
 .headerMenuItem:last-child {
 	justify-content: end;
 }
+
+.menuItem {
+	padding: 17px 20px;
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	color: var(--text-inactive-color);
+	font-size: 16px;
+	line-height: 1.5;
+	font-weight: 400;
+	text-wrap: nowrap;
+	text-decoration: none;
+}
+
+.activeMenuItem {
+	composes: menuItem;
+	color: rgba(242, 242, 243, 1);
+}

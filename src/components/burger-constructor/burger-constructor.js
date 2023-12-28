@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
+import { useNavigate } from 'react-router';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import ConstructorPart from '../constructor-part/constructor-part';
 import ConstructorPartEmpty from '../constructor-part/constructor-part-empty';
@@ -9,6 +10,7 @@ import FillingIngredients from '../filling-ingredients/filling-ingredients';
 import Price from '../price/price';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
+import Loader from '../loader/loader';
 import { ADD_BUN, DELETE_ALL_BURGER_INGREADIENTS, addFillingIngridient } from '../../services/burger-ingredients/actions';
 import { createOrder, CLEAR_ORDER_INFO } from '../../services/order/actions';
 import { getBurgerPrice, getOrderDataForRequest } from '../../utils/data-utils';
@@ -16,15 +18,20 @@ import { getBurgerPrice, getOrderDataForRequest } from '../../utils/data-utils';
 import styles from './burger-constructor.module.css';
 
 const BurgerConstructor = ({extraClass}) => {
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const {
 		burgerIngredients,
 		ingredients,
 		order,
+		isLoading,
+		user,
 	} = useSelector(store => ({
 		burgerIngredients: store.burgerIngredients.burgerIngredients,
 		ingredients: store.ingredients.ingredients,
 		order: store.order.order,
+		isLoading: store.order.isLoading,
+		user: store.auth.user,
 	}));
 
 	const burgerPrice = useMemo(() => {
@@ -76,8 +83,12 @@ const BurgerConstructor = ({extraClass}) => {
 	const isHoverBun = useMemo(() => isHoverLow || isHoverUp, [isHoverUp, isHoverLow]);
 
 	const handleCreateOrder = () => {
-		const ingredientIds = getOrderDataForRequest(burgerIngredients);
-		dispatch(createOrder(ingredientIds));
+		if (user) {
+			const ingredientIds = getOrderDataForRequest(burgerIngredients);
+			dispatch(createOrder(ingredientIds));
+		} else {
+			navigate('/login');
+		}
 	};
 
 	const handleClearOrder = () => {
@@ -144,6 +155,9 @@ const BurgerConstructor = ({extraClass}) => {
 				<Modal onClose={handleClearOrder}>
 					<OrderDetails orderNumber={order.number} />
 				</Modal>
+			)}
+			{isLoading && (
+				<Loader />
 			)}
 		</>
 	);
