@@ -29,7 +29,9 @@ const AppHeader = ({extraClass = ''}) => {
 					</div>
 				</div>
 				<div className={styles.headerMenuItem}>
-					<Logo />
+					<NavLink to="">
+						<Logo />
+					</NavLink>
 				</div>
 				<div className={styles.headerMenuItem}>
 					<NavLink to="/profile" className={({isActive}) => isActive ? styles.activeMenuItem : styles.menuItem}>

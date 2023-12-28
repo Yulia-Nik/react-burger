@@ -56,7 +56,9 @@ const Profile = () => {
 		setPassword('');
 	};
 
-	const handleOnSave = () => {
+	const handleOnSave = event => {
+		event.preventDefault();
+
 		dispatch(updateUserInfo({
 			name: name || user.name,
 			email: email || user.email,
@@ -67,7 +69,10 @@ const Profile = () => {
 	return(
 		<>
 			<ProfileSidebar />
-			<FormContaner center={false}>
+			<FormContaner
+				center={false}
+				onSubmit={handleOnSave}
+			>
 				<Input
 					type={'text'}
 					placeholder="Имя"
@@ -100,7 +105,7 @@ const Profile = () => {
 					<Button htmlType="button" type="secondary" size="medium" extraClass="mr-5" onClick={handleOnCancel}>
 						Отмена
 					</Button>
-					<Button htmlType="button" type="primary" size="medium" onClick={handleOnSave}>
+					<Button htmlType="submit" type="primary" size="medium">
 						Сохранить
 					</Button>
 				</div>

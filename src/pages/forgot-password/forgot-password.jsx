@@ -14,7 +14,9 @@ const ForgotPassword = () => {
 		setEmail(event.target.value);
 	};
 
-	const handleOnClick = () => {
+	const handleOnSubmit = event => {
+		event.preventDefault();
+
 		fetch(`${BASE_URL}password-reset`, {
 			method: 'POST',
 			headers: {
@@ -40,6 +42,7 @@ const ForgotPassword = () => {
 		<FormContaner
 			title="Восстановление пароля"
 			additionalContent={<FormFooter text="Вспомнили пароль?" linkText="Войти" path="/login" />}
+			onSubmit={handleOnSubmit}
 		>
 			<EmailInput
 				value={email}
@@ -48,7 +51,7 @@ const ForgotPassword = () => {
 				placeholder="Укажите e-mail"
 				onChange={handleOnChange}
 			/>
-			<Button htmlType="button" type="primary" size="medium" onClick={handleOnClick}>
+			<Button htmlType="submit" type="primary" size="medium">
 				Восстановить
 			</Button>
 		</FormContaner>

@@ -35,7 +35,9 @@ const Register = () => {
 		};
 	};
 
-	const handleOnClick = () => {
+	const handleOnSubmit = event => {
+		event.preventDefault();
+
 		fetch(`${BASE_URL}auth/register`, {
 			method: 'POST',
 			headers: {
@@ -70,6 +72,7 @@ const Register = () => {
 		<FormContaner
 			title="Регистрация"
 			additionalContent={<FormFooter text="Уже зарегистрированы?" linkText="Войти" path="/login" />}
+			onSubmit={handleOnSubmit}
 		>
 			<Input
 				value={name}
@@ -89,7 +92,7 @@ const Register = () => {
 				name={'password'}
 				onChange={handleOnChange}
 			/>
-			<Button htmlType="button" type="primary" size="medium" onClick={handleOnClick}>
+			<Button htmlType="submit" type="primary" size="medium">
 				Зарегистрироваться
 			</Button>
 		</FormContaner>

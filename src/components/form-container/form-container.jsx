@@ -2,13 +2,13 @@ import PropTypes from 'prop-types';
 
 import styles from './form-container.module.css';
 
-const FormContaner = ({ title, children, additionalContent, center = true }) => {
+const FormContaner = ({ title, children, additionalContent, onSubmit, center = true }) => {
 	return (
 		<section className={`${styles.container}${center ? ` ${styles.centerContainer}` : ''}`}>
 			{title && (
 				<h1 className="text text_type_main-medium mb-6">{title}</h1>
 			)}
-			<form className={styles.form}>
+			<form className={styles.form} onSubmit={onSubmit}>
 				{children}
 			</form>
 			{additionalContent && (
@@ -24,6 +24,7 @@ FormContaner.propTypes = {
 	title: PropTypes.string,
 	children: PropTypes.node,
 	additionalContent: PropTypes.node,
+	onSubmit: PropTypes.func,
 	center: PropTypes.bool,
 };
 

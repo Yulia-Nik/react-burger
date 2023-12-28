@@ -24,7 +24,9 @@ const ResetPassword = () => {
 		};
 	};
 
-	const handleOnClick = () => {
+	const handleOnSubmit = event => {
+		event.preventDefault();
+
 		fetch(`${BASE_URL}password-reset/reset`, {
 			method: 'POST',
 			headers: {
@@ -59,11 +61,11 @@ const ResetPassword = () => {
 		<FormContaner
 			title="Восстановление пароля"
 			additionalContent={<FormFooter text="Вспомнили пароль?" linkText="Войти" path="/login" />}
+			onSubmit={handleOnSubmit}
 		>
 			<PasswordInput
 				value={password}
 				name={'password'}
-				isIcon={false}
 				placeholder="Введите новый пароль"
 				onChange={handleOnChange}
 			/>
@@ -74,7 +76,7 @@ const ResetPassword = () => {
 				name={'code'}
 				onChange={handleOnChange}
 			/>
-			<Button htmlType="button" type="primary" size="medium" onClick={handleOnClick}>
+			<Button htmlType="submit" type="primary" size="medium">
 				Сохранить
 			</Button>
 		</FormContaner>

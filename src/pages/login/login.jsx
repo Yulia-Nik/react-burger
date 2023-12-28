@@ -38,7 +38,9 @@ const Login = () => {
 		};
 	};
 
-	const handleOnClick = () => {
+	const handleOnSubmit = event => {
+		event.preventDefault();
+
 		fetch(`${BASE_URL}auth/login`, {
 			method: 'POST',
 			headers: {
@@ -72,6 +74,7 @@ const Login = () => {
 		<FormContaner
 			title="Вход"
 			additionalContent={additionalContent}
+			onSubmit={handleOnSubmit}
 		>
 			<EmailInput
 				value={email}
@@ -85,7 +88,7 @@ const Login = () => {
 				extraClass="mb-2"
 				onChange={handleOnChange}
 			/>
-			<Button htmlType="button" type="primary" size="medium" onClick={handleOnClick}>
+			<Button htmlType="submit" type="primary" size="medium">
 				Войти
 			</Button>
 		</FormContaner>
