@@ -1,0 +1,29 @@
+.sidebar {
+	width: 320px;
+}
+
+.link {
+	font-size: 24px;
+	line-height: 2.6;
+	font-weight: 700;
+	color: var(--text-inactive-color);
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.activeLink {
+	composes: link;
+	color: rgba(242, 242, 243, 1);
+}
+
+.list {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.caption {
+	color: var(--text-inactive-color);
+	font-size: 16px;
+	line-height: 1.5;
+}

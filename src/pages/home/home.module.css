@@ -1,0 +1,10 @@
+.row {
+	height: calc(100vh - 235px);
+	display: flex;
+	justify-content: space-between;
+	gap: 40px;
+}
+
+.column {
+	width: 50%;
+}

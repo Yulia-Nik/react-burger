@@ -1,42 +1,74 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector, Provider } from 'react-redux';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import Loader from '../loader/loader';
+import { Provider, useDispatch, useSelector } from 'react-redux';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import AppHeader from '../app-header/app-header';
 import { store } from '../../services/store';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import { getIngredients } from '../../services/ingredients/actions';
+import {
+	Home,
+	NonExistentPage,
+	Login,
+	Register,
+	ForgotPassword,
+	ResetPassword,
+	Profile,
+	Ingredients,
+	Orders,
+} from '../../pages';
+import Modal from '../modal/modal';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import { DELETE_CURRENT_INGREDIENT } from '../../services/current-ingredient/actions';
+import { checkUserAuth } from '../../services/auth/actions';
+import { OnlyAuth, OnlyUnAuth } from '../protected-route-element/protected-route-element';
 
 import styles from './app.module.css';
 
 function App() {
 	const dispatch = useDispatch();
-	const { ingredients, isLoading, error } = useSelector(store => store.ingredients);
+	const location = useLocation();
+	const { state } = location;
+	const currentIngredient = useSelector(store => store.currentIngredient.currentIngredient);
+	const navigate = useNavigate();
 
-	useEffect(() => dispatch(getIngredients()), []);
+	const handleCloseModal = () => {
+		dispatch({
+			type: DELETE_CURRENT_INGREDIENT
+		});
+
+		navigate('/', {replace: true});
+	};
+
+	useEffect(() => {
+		dispatch(checkUserAuth());
+	}, []);
 
 	return (
 		<div className={styles.app}>
 			<Provider store={store}>
 				<AppHeader extraClass={styles.content} />
-				{isLoading && (
-					<Loader />
-				)}
-				{!isLoading && ingredients && (
-					<main className={`pt-10 pb-10 pl-6 pr-6 ${styles.content} ${styles.mainContent}`}>
-						<h1 className="pl-5 pr-5 mb-5">
-							Соберите бургер
-						</h1>
-						<DndProvider backend={HTML5Backend}>
-							<div className={styles.row}>
-								<BurgerIngredients extraClass={styles.column} />
-								<BurgerConstructor extraClass={styles.column} />
-							</div>
-						</DndProvider>
-					</main>
-				)}
+
+				<main className={`pt-10 pb-10 pl-6 pr-6 ${styles.content} ${styles.mainContent}`}>
+					<Routes location={state?.backgroundLocation || location}>
+						<Route path="/" element={<Home />} />
+						<Route path="*" element={<NonExistentPage />} />
+						<Route path="/login" element={<OnlyUnAuth component={<Login />} />} />
+						<Route path="/register" element={<OnlyUnAuth component={<Register />} />} />
+						<Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPassword />} />} />
+						<Route path="/reset-password" element={<OnlyUnAuth component={<ResetPassword />} />} />
+						<Route path="/profile" element={<OnlyAuth component={<Profile />} />} />
+						<Route path="/ingredients/:id" element={<Ingredients />} />
+						<Route path="/profile/orders" element={<OnlyAuth component={<Orders />} />} />
+					</Routes>
+
+					{state?.backgroundLocation && (
+						<Routes>
+							<Route path="/ingredients/:id" element={(
+								<Modal title="Детали ингредиента" onClose={handleCloseModal}>
+									<IngredientDetails ingredient={currentIngredient} />
+								</Modal>
+							)} />
+						</Routes>
+					)}
+				</main>
 			</Provider>
 		</div>
 	);

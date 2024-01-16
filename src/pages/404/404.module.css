@@ -1,0 +1,18 @@
+.content {
+	width: 100%;
+	height: calc(100vh - 170px);
+	display: flex;
+}
+
+.title {
+	margin: auto;
+	font-size: 34px;
+	font-weight: 500;
+}
+
+.image {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	height: 70vh;
+}
