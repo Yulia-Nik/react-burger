@@ -1,10 +1,9 @@
-import { FormEvent, ReactNode } from 'react';
+import { FormEvent, PropsWithChildren, ReactNode } from 'react';
 
 import styles from './form-container.module.css';
 
-interface IFormContainerProps {
+interface IFormContainerProps extends PropsWithChildren {
 	title?: string;
-	children: ReactNode;
 	additionalContent?: ReactNode;
 	center?: boolean;
 	onSubmit: (event: FormEvent<HTMLFormElement>) => void;

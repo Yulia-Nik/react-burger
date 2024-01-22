@@ -3,9 +3,8 @@ import {
 	ACCESS_TOKEN_STORAGE_KEY,
 	REFRESH_TOKEN_STORAGE_KEY
 } from './constants';
-import { IHttpResponse } from './types';
 
-const checkReponse = <T>(res: IHttpResponse): Promise<T> => {
+const checkResponse = <T>(res: Response): Promise<T> => {
 	return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };
 
@@ -19,16 +18,14 @@ export const refreshToken = () =>
 		body: JSON.stringify({
 			token: localStorage.getItem(REFRESH_TOKEN_STORAGE_KEY),
 		}),
-	}).then(checkReponse);
+	}).then(checkResponse);
 
-export const fetchWithRefresh = async <T>(url: string, options: T) => {
+export const fetchWithRefresh = async (url: string, options: RequestInit) => {
 	try {
-		// @ts-ignore
 		const res = await fetch(url, options);
-		return await checkReponse<T>(res);
+		return await checkResponse(res);
 	} catch (err: any) {
 		if (err.message === 'jwt expired') {
-			// TODO: Изменить
 			const refreshData: any = await refreshToken();
 
 			if (!refreshData.success) {
@@ -38,15 +35,12 @@ export const fetchWithRefresh = async <T>(url: string, options: T) => {
 			localStorage.setItem(REFRESH_TOKEN_STORAGE_KEY, refreshData.refreshToken);
 			localStorage.setItem(ACCESS_TOKEN_STORAGE_KEY, refreshData.accessToken.split('Bearer ')[1]);
 
-			// @ts-ignore
 			options.headers = {
-				// @ts-ignore
 				...options.headers,
 				'Authorization': refreshData.accessToken,
 			};
-			// @ts-ignore
 			const res = await fetch(url, options);
-			return await checkReponse(res);
+			return await checkResponse(res);
 		} else {
 			new Error(`Произошла ошибка: ${err}`);
 			return Promise.reject(err);;

@@ -1,6 +1,4 @@
-import { IHttpResponse } from './types';
-
-export const getResponse = <T>(res: IHttpResponse): Promise<T> => {
+export const getResponse = <T>(res: Response): Promise<T> => {
 	if (res.ok) {
 		return res.json();
 	}

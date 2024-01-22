@@ -13,7 +13,7 @@ interface IBurgerIngredients {
  */
 export const formatIngredientsData = (data: Array<IIngredientType>): IResultIngredientsData => {
 	const result = data.reduce(
-		(acc: any, elem: IIngredientType) => {
+		(acc: IResultIngredientsData, elem: IIngredientType) => {
 			const newType = Object.keys(acc).indexOf(elem.type) === -1;
 
 			if (newType) {
@@ -26,8 +26,8 @@ export const formatIngredientsData = (data: Array<IIngredientType>): IResultIngr
 			} else {
 				return {
 					...acc,
-					[elem.type]: [
-						...acc[elem.type],
+					[elem?.type]: [
+						...acc[elem.type] as Array<IIngredientType>,
 						elem,
 					]
 				};

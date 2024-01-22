@@ -1,10 +1,9 @@
-import { ReactNode } from 'react';
+import { PropsWithChildren } from 'react';
 
 import styles from './constructor-part.module.css';
 
-interface IConstructorPartEmptyProps {
+interface IConstructorPartEmptyProps extends PropsWithChildren {
 	outline: string;
-	children?: ReactNode;
 };
 
 const ConstructorPartEmpty = ({ outline, children }: IConstructorPartEmptyProps): JSX.Element => {

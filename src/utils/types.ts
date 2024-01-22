@@ -18,13 +18,9 @@ export interface IBurgerIngredientType extends IIngredientType {
 }
 
 export interface IResultIngredientsData {
-	bun: Array<IIngredientType>;
-	main: Array<IIngredientType>;
-	sauce: Array<IIngredientType>;
-};
-
-export interface IHttpResponse extends Response {
-	ok: boolean;
+	bun?: Array<IIngredientType>;
+	main?: Array<IIngredientType>;
+	sauce?: Array<IIngredientType>;
 };
 
 export interface IRefreshToken {
