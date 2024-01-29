@@ -1,0 +1,22 @@
+.card {
+	padding: 24px;
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	background: rgba(28, 28, 33, 1);
+	border-radius: 40px;
+}
+
+.row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.statusDone {
+	color: rgba(0, 204, 204, 1);
+}
+
+.ingredients {
+	display: flex;
+}

@@ -1,0 +1,37 @@
+.icon {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 64px;
+	height: 64px;
+	overflow: hidden;
+	background: linear-gradient(35deg, rgba(128, 26, 178, 1) 30%, rgba(76, 76, 255, 1));
+	border-radius: 50%;
+}
+
+.img {
+	width: 62px;
+	height: 62px;
+	object-fit: cover;
+	overflow: hidden;
+	background: rgba(19, 19, 22, 1);
+	border-radius: 50%;
+}
+
+.blur {
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	bottom: 2px;
+	left: 2px;
+	background: #1c1c21;
+	opacity: .6;
+	border-radius: 50%;
+}
+
+.counter {
+	position: absolute;
+	font-size: 16px;
+	color: #f2f2f3;
+}
