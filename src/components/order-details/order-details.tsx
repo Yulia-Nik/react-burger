@@ -1,4 +1,5 @@
 import iconDone from '../../images/icon-done.png';
+import LuminousText from '../luminous-text/luminous-text';
 
 import styles from './order-details.module.css';
 
@@ -9,7 +10,7 @@ interface IOrderDetailsProps {
 const OrderDetails = ({ orderNumber }: IOrderDetailsProps): JSX.Element => {
 	return (
 		<div className={styles.container}>
-			<div className={styles.number}>{orderNumber}</div>
+			<LuminousText text={orderNumber} type="large" extraClass="pl-10 pr-10 mb-8" />
 			<div className={styles.title}>идентификатор заказа</div>
 			<img src={iconDone} alt="Заказ принят" className={styles.icon} />
 			<div className="mb-2">Ваш заказ начали готовить</div>

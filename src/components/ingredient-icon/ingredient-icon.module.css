@@ -10,6 +10,10 @@
 	border-radius: 50%;
 }
 
+.icon:not(:first-child) {
+	left: -16px;
+}
+
 .img {
 	width: 62px;
 	height: 62px;

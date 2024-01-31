@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Provider, useDispatch, useSelector } from 'react-redux';
+import { Provider } from 'react-redux';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import AppHeader from '../app-header/app-header';
 import { store } from '../../services/store';
@@ -13,11 +13,13 @@ import {
 	Profile,
 	Ingredients,
 	Orders,
+	Feed,
 } from '../../pages';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { DELETE_CURRENT_INGREDIENT } from '../../services/current-ingredient/actions';
 import { checkUserAuth } from '../../services/auth/actions';
+import { useSelector, useDispatch } from '../../services/store';
 import { OnlyAuth, OnlyUnAuth } from '../protected-route-element/protected-route-element';
 
 import styles from './app.module.css';
@@ -26,7 +28,6 @@ function App(): JSX.Element {
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const { state } = location;
-	// @ts-ignore
 	const currentIngredient = useSelector(store => store.currentIngredient.currentIngredient);
 	const navigate = useNavigate();
 
@@ -39,7 +40,6 @@ function App(): JSX.Element {
 	};
 
 	useEffect(() => {
-		// @ts-ignore
 		dispatch(checkUserAuth());
 	}, []);
 
@@ -59,6 +59,7 @@ function App(): JSX.Element {
 						<Route path="/profile" element={<OnlyAuth component={<Profile />} />} />
 						<Route path="/ingredients/:id" element={<Ingredients />} />
 						<Route path="/profile/orders" element={<OnlyAuth component={<Orders />} />} />
+						<Route path="/feed" element={<Feed />} />
 					</Routes>
 
 					{state?.backgroundLocation && (

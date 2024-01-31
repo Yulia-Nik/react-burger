@@ -1,20 +1,18 @@
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import IngredientDetails from '../../components/ingredient-details/ingredient-details';
 import Loader from '../../components/loader/loader';
 import { getIngredientById } from '../../utils/data-utils';
 import { getIngredients } from '../../services/ingredients/actions';
+import { useDispatch, useSelector } from '../../services/store';
 
 import styles from './ingredients.module.css';
 
 const Ingredients = (): JSX.Element => {
 	const dispatch = useDispatch();
 	const id = window.location.pathname.split('/')[2] || '';
-	// @ts-ignore
 	const { ingredients, isLoading } = useSelector(store => store.ingredients);
 	const currentIngredient = ingredients ? getIngredientById(ingredients, id) : null;
 
-	// @ts-ignore
 	useEffect(() => dispatch(getIngredients()), []);
 
 	return (

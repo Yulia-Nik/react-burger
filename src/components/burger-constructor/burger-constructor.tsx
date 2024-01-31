@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { useNavigate } from 'react-router';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -15,6 +14,7 @@ import { createOrder, CLEAR_ORDER_INFO } from '../../services/order/actions';
 import { getBurgerPrice, getOrderDataForRequest } from '../../utils/data-utils';
 
 import styles from './burger-constructor.module.css';
+import { useSelector, useDispatch } from '../../services/store';
 
 interface IBurgerConstructorProps {
 	extraClass?: string;
@@ -47,19 +47,15 @@ const BurgerConstructor = ({extraClass}: IBurgerConstructorProps): JSX.Element =
 		isLoading,
 		user,
 	} = useSelector(store => ({
-		// @ts-ignore
 		burgerIngredients: store.burgerIngredients.burgerIngredients,
-		// @ts-ignore
 		ingredients: store.ingredients.ingredients,
-		// @ts-ignore
 		order: store.order.order,
-		// @ts-ignore
 		isLoading: store.order.isLoading,
-		// @ts-ignore
 		user: store.auth.user,
 	}));
 
 	const burgerPrice = useMemo<number>(() => {
+		//@ts-ignore
 		return getBurgerPrice(burgerIngredients);
 	}, [burgerIngredients]);
 
@@ -112,8 +108,8 @@ const BurgerConstructor = ({extraClass}: IBurgerConstructorProps): JSX.Element =
 
 	const handleCreateOrder = (): void => {
 		if (user) {
+			//@ts-ignore
 			const ingredientIds = getOrderDataForRequest(burgerIngredients);
-			// @ts-ignore
 			dispatch(createOrder(ingredientIds));
 		} else {
 			navigate('/login');

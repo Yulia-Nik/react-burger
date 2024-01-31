@@ -101,3 +101,39 @@ export const getIngredientById = (ingredients: IResultIngredientsData, id: strin
 
 	return targetIngredient;
 };
+
+/**
+ * Возвращает текст статуса для превью заказа
+ * 
+ * @param {string} status - статус заказа
+ * @returns {string}
+ */
+export const getStatusOrderName = (status: string): string => {
+	switch (status) {
+		case 'done':
+			return 'Выполнен';
+		default:
+			return 'Неизвестный тип';
+	};
+};
+
+/**
+ * Возвращает массив ингредиентов бургера
+ * 
+ * @param {IResultIngredientsData} ingredients - объект ингредиентов с группировкой по катигориям
+ * @param {Array} ingredientIds - массив id ингредиентов бургера
+ * @returns {Array}
+ */
+export const getBurgerIngredientsData = (ingredients: IResultIngredientsData | null, ingredientIds: Array<string>): Array<IIngredientType> => {
+	let result: Array<IIngredientType> = [];
+	if (ingredients !== null) {
+		ingredientIds.forEach(id => {
+			const ingredient = getIngredientById(ingredients, id);
+			if (ingredient !== null) {
+				result.push(ingredient);
+			}
+		});
+	}
+
+	return result;
+};

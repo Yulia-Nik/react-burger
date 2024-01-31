@@ -1,14 +1,15 @@
 import styles from './ingredient-icon.module.css';
 
 interface IIngredientIconProps {
-	residue?: number,
+	src: string,
+	residue?: number;
 }
 
-const IngredientIcon = ({ residue }: IIngredientIconProps): JSX.Element => {
+const IngredientIcon = ({ src, residue }: IIngredientIconProps): JSX.Element => {
 	return (
 		<div className={styles.icon}>
-			<img className={styles.img} src="https://code.s3.yandex.net/react/code/bun-02-mobile.png" alt="Ингредиент" />
-			{residue && (
+			<img className={styles.img} src={src} alt="Ингредиент" />
+			{Boolean(residue) && (
 				<>
 					<div className={styles.blur}></div>
 					<span className={styles.counter}>+{residue}</span>
