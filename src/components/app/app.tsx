@@ -62,7 +62,7 @@ function App(): JSX.Element {
 						<Route path="/feed" element={<Feed />} />
 					</Routes>
 
-					{state?.backgroundLocation && (
+					{state?.backgroundLocation && currentIngredient && (
 						<Routes>
 							<Route path="/ingredients/:id" element={(
 								<Modal title="Детали ингредиента" onClose={handleCloseModal}>
