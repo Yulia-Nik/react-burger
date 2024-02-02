@@ -32,6 +32,7 @@ export interface IRefreshToken {
 export interface IUserData {
 	email: string;
 	name: string;
+	password?: string;
 };
 
 export interface ILoginResponse {

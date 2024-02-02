@@ -11,10 +11,10 @@ import OrderDetails from '../order-details/order-details';
 import Loader from '../loader/loader';
 import { ADD_BUN, DELETE_ALL_BURGER_INGREADIENTS, addFillingIngridient } from '../../services/burger-ingredients/actions';
 import { createOrder, CLEAR_ORDER_INFO } from '../../services/order/actions';
+import { useSelector, useDispatch } from '../../services/store';
 import { getBurgerPrice, getOrderDataForRequest } from '../../utils/data-utils';
 
 import styles from './burger-constructor.module.css';
-import { useSelector, useDispatch } from '../../services/store';
 
 interface IBurgerConstructorProps {
 	extraClass?: string;
@@ -60,7 +60,7 @@ const BurgerConstructor = ({extraClass}: IBurgerConstructorProps): JSX.Element =
 	}, [burgerIngredients]);
 
 	const isActiveBtn = useMemo<boolean>(() => {
-		return burgerIngredients.bun && burgerIngredients.filling.length;
+		return Boolean(burgerIngredients.bun && burgerIngredients.filling.length);
 	}, [burgerIngredients]);
 
 	const [{ isHoverUp }, upperDropRef] = useDrop<IDragObject, unknown, IUpperDropCollectedProps>({

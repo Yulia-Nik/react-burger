@@ -6,6 +6,7 @@ import {
 	REFRESH_TOKEN_STORAGE_KEY,
 } from '../../utils/constants';
 import { getResponse } from '../../utils/request-utils';
+import { IUserData } from '../../utils/types';
 import {
 	fetchWithRefresh
 } from '../../utils/auth-utils';
@@ -21,22 +22,17 @@ interface ISetUser {
 	payload: null | IUserData;
 }
 
-interface IUserData {
-	email: string;
-	name: string;
-}
-
 interface IUserDataResponse {
 	success: boolean;
 	user?: IUserData;
 }
 
-type AppActions = ISetUser | ISetAuthCheckedAction;
+export type TAuthActions = ISetUser | ISetAuthCheckedAction;
 
 export type RootState = ReturnType<typeof store.getState>;
 
 export type AppThunk<TReturnType = void> = ActionCreator<
-	ThunkAction<TReturnType, Action, RootState, AppActions>
+	ThunkAction<TReturnType, Action, RootState, TAuthActions>
 >;
 
 // interface AppDispatch<TReturnType = void> = (

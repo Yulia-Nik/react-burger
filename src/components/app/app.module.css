@@ -22,7 +22,7 @@ h1 {
 	font-weight: 700;
 }
 
-*:-webkit-scrollbar-track {
+*::-webkit-scrollbar-track {
 	border-radius: 3px;
 	background-color: rgba(47, 47, 55, 1);
 }
