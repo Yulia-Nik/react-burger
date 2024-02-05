@@ -1,9 +1,9 @@
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, ReactNode } from 'react';
 
 import styles from './modal-body.module.css';
 
 export interface IModalBodyProps extends PropsWithChildren {
-	title?: string;
+	title?: string | ReactNode;
 	onClose: () => void;
 }
 

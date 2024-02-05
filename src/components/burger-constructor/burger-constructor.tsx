@@ -69,6 +69,7 @@ const BurgerConstructor = ({extraClass}: IBurgerConstructorProps): JSX.Element =
 			isHoverUp: monitor.isOver(),
 		}),
 		drop(item) {
+			//@ts-ignore
 			dispatch({
 				type: ADD_BUN,
 				// @ts-ignore
@@ -83,6 +84,7 @@ const BurgerConstructor = ({extraClass}: IBurgerConstructorProps): JSX.Element =
 			isHoverLow: monitor.isOver(),
 		}),
 		drop(item) {
+			//@ts-ignore
 			dispatch({
 				type: ADD_BUN,
 				//@ts-ignore
@@ -97,6 +99,7 @@ const BurgerConstructor = ({extraClass}: IBurgerConstructorProps): JSX.Element =
 			isHoverFilling: monitor.isOver(),
 		}),
 		drop(item) {
+			//@ts-ignore
 			dispatch(
 				// @ts-ignore
 				addFillingIngridient(ingredients[item.type].filter(el => el._id === item.id)[0])
@@ -110,6 +113,7 @@ const BurgerConstructor = ({extraClass}: IBurgerConstructorProps): JSX.Element =
 		if (user) {
 			//@ts-ignore
 			const ingredientIds = getOrderDataForRequest(burgerIngredients);
+			//@ts-ignore
 			dispatch(createOrder(ingredientIds));
 		} else {
 			navigate('/login');
@@ -117,10 +121,12 @@ const BurgerConstructor = ({extraClass}: IBurgerConstructorProps): JSX.Element =
 	};
 
 	const handleClearOrder = (): void => {
+		//@ts-ignore
 		dispatch({
 			type: CLEAR_ORDER_INFO
 		});
 
+		//@ts-ignore
 		dispatch({
 			type: DELETE_ALL_BURGER_INGREADIENTS,
 		});

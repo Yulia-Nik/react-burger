@@ -1,3 +1,12 @@
-.list {
+.orders {
 	width: 100%;
+	height: calc(100vh - 170px);
+}
+
+.list {
+	padding: 0 8px 0 0;
+	margin: 0;
+	overflow-y: scroll;
+	height: 100%;
+	list-style-type: none;
 }

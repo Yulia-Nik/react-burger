@@ -3,7 +3,9 @@ import {
 	ActionCreatorWithoutPayload,
 	Middleware,
 } from '@reduxjs/toolkit';
-import { RootState } from "../store";
+import { refreshToken } from '../../utils/auth-utils';
+import { ACCESS_TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY } from '../../utils/constants';
+import { RootState } from '../store';
 
 export type TWSActionTypes = {
 	wsConnect: ActionCreatorWithPayload<string>;
@@ -20,7 +22,7 @@ const RECONNECT_PERIOD = 3000;
 
 export const socketMiddleware = (
 	wsActions: TWSActionTypes,
-	withTokenRefresh = false
+	withTokenRefresh: boolean = false
 ): Middleware<{}, RootState> => {
 	return (store) => {
 		let socket: WebSocket | null = null;
@@ -69,41 +71,39 @@ export const socketMiddleware = (
 					const { data } = event;
 					const parsedData = JSON.parse(data);
 		
-					// if (withTokenRefresh && parsedData.message === "Invalid or missing token") {
-					//   refreshToken()
-					//     .then(refreshData => {
-					//       const wssUrl = new URL(url);
-					//       wssUrl.searchParams.set(
-					//         "token",
-					//         refreshData.accessToken.replace("Bearer ", "")
-					//       );
-					//       dispatch(wsConnect(wssUrl.toString()))
-					//     })
-					//     .catch(err => {
-					//       dispatch(onError(err.message));
-					//     })
-		
-					//   dispatch(wsDisconnect());
-					
-					//   return;
-					// }
-		
-					dispatch(onMessage(parsedData));
+					if (withTokenRefresh && parsedData.message === 'Invalid or missing token') {
+						refreshToken()
+							.then((refreshData) => {
+								if (!refreshData.success) {
+									return Promise.reject(refreshData);
+								}
+
+								localStorage.setItem(REFRESH_TOKEN_STORAGE_KEY, refreshData.refreshToken);
+								localStorage.setItem(ACCESS_TOKEN_STORAGE_KEY, refreshData.accessToken.split('Bearer ')[1]);
+
+								dispatch(wsConnect(url));
+							})
+							.catch(err => {
+								dispatch(onError(err));
+							});
+					} else {
+						dispatch(onMessage(parsedData));
+					}
 				}
 			}
-	
+
 			if (socket && wsSendMessage?.match(action)) {
 				socket.send(JSON.stringify(action.payload));
 			}
-	
+
 			if (socket && wsDisconnect.match(action)) {
 				clearTimeout(reconnectTimer);
 				isConnected = false;
 				socket.close();
 				socket = null;
 			}
-	
+
 			next(action);
 		};
 	};
-  };
+};

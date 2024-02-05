@@ -13,7 +13,13 @@ const Home = (): JSX.Element => {
 	const dispatch = useDispatch();
 	const { ingredients, isLoading } = useSelector(store => store.ingredients);
 
-	useEffect(() => dispatch(getIngredients()), []);
+	
+	useEffect(() => {
+		if (!ingredients) {
+			//@ts-ignore
+			dispatch(getIngredients());
+		}
+	}, []);
 
 	return (
 		<>

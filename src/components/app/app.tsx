@@ -14,10 +14,13 @@ import {
 	Ingredients,
 	Orders,
 	Feed,
+	Order,
 } from '../../pages';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import OrderInfo from '../order-info/order-info';
 import { DELETE_CURRENT_INGREDIENT } from '../../services/current-ingredient/actions';
+import { DELETE_CURRENT_ORDER } from '../../services/current-order/actions';
 import { checkUserAuth } from '../../services/auth/actions';
 import { useSelector, useDispatch } from '../../services/store';
 import { OnlyAuth, OnlyUnAuth } from '../protected-route-element/protected-route-element';
@@ -29,9 +32,11 @@ function App(): JSX.Element {
 	const location = useLocation();
 	const { state } = location;
 	const currentIngredient = useSelector(store => store.currentIngredient.currentIngredient);
+	const currentOrder = useSelector(store => store.currentOrder.currentOrder);
 	const navigate = useNavigate();
 
-	const handleCloseModal = (): void => {
+	const handleCloseModalIngredient = (): void => {
+		//@ts-ignore
 		dispatch({
 			type: DELETE_CURRENT_INGREDIENT
 		});
@@ -39,7 +44,17 @@ function App(): JSX.Element {
 		navigate('/', {replace: true});
 	};
 
+	const handleCloseModalOrder = (): void => {
+		//@ts-ignore
+		dispatch({
+			type: DELETE_CURRENT_ORDER
+		});
+
+		navigate('/feed', {replace: true});
+	};
+
 	useEffect(() => {
+		//@ts-ignore
 		dispatch(checkUserAuth());
 	}, []);
 
@@ -60,13 +75,27 @@ function App(): JSX.Element {
 						<Route path="/ingredients/:id" element={<Ingredients />} />
 						<Route path="/profile/orders" element={<OnlyAuth component={<Orders />} />} />
 						<Route path="/feed" element={<Feed />} />
+						<Route path="/feed/:id" element={<Order />} />
 					</Routes>
 
 					{state?.backgroundLocation && currentIngredient && (
 						<Routes>
 							<Route path="/ingredients/:id" element={(
-								<Modal title="Детали ингредиента" onClose={handleCloseModal}>
+								<Modal title="Детали ингредиента" onClose={handleCloseModalIngredient}>
 									<IngredientDetails ingredient={currentIngredient} />
+								</Modal>
+							)} />
+						</Routes>
+					)}
+
+					{state?.backgroundLocation && currentOrder && (
+						<Routes>
+							<Route path="/feed/:id" element={(
+								<Modal
+									title={<div className="text text_type_digits-default">#{currentOrder.number}</div>}
+									onClose={handleCloseModalOrder}
+								>
+									<OrderInfo data={currentOrder} />
 								</Modal>
 							)} />
 						</Routes>

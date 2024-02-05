@@ -8,6 +8,7 @@ import Profile from './profile/profile';
 import Ingredients from './ingredients/ingredients';
 import Orders from './orders/orders';
 import Feed from './feed/feed';
+import Order from './order/order';
 
 export {
 	Home,
@@ -20,4 +21,5 @@ export {
 	Ingredients,
 	Orders,
 	Feed,
+	Order,
 };

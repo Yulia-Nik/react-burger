@@ -3,6 +3,7 @@ import {
 	ACCESS_TOKEN_STORAGE_KEY,
 	REFRESH_TOKEN_STORAGE_KEY
 } from './constants';
+import { IRefreshToken } from './types';
 
 const checkResponse = <T>(res: Response): Promise<T> => {
 	return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
@@ -18,9 +19,9 @@ export const refreshToken = () =>
 		body: JSON.stringify({
 			token: localStorage.getItem(REFRESH_TOKEN_STORAGE_KEY),
 		}),
-	}).then(checkResponse);
+	}).then(res => checkResponse<IRefreshToken>(res));
 
-export const fetchWithRefresh = async (url: string, options: RequestInit) => {
+export const fetchWithRefresh = async <T>(url: string, options: RequestInit): Promise<T> => {
 	try {
 		const res = await fetch(url, options);
 		return await checkResponse(res);

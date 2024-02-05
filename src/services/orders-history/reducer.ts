@@ -5,7 +5,7 @@ import { IOrderResultType } from '../../utils/types';
 
 interface IOrderFeedStore {
 	status: WebsocketStatus;
-	orderFeed: Array<IOrderResultType>;
+	ordersHistory: Array<IOrderResultType>;
 	error: string;
 	total: number;
 	totalToday: number;
@@ -13,13 +13,13 @@ interface IOrderFeedStore {
 
 const initialState: IOrderFeedStore = {
 	status: WebsocketStatus.CLOSED,
-	orderFeed: [],
+	ordersHistory: [],
 	error: '',
 	total: 0,
 	totalToday: 0,
 };
 
-export const orderFeedReducer = createReducer(initialState, builder => {
+export const ordersHistoryReducer = createReducer(initialState, builder => {
 	builder
 		.addCase(wsConnecting, state => {
 			state.status = WebsocketStatus.CONNECTING;
@@ -34,10 +34,9 @@ export const orderFeedReducer = createReducer(initialState, builder => {
 			state.error = action.payload;
 		})
 		.addCase(wsMessage, (state, action) => {
-			console.log('Лента заказов');
+			console.log('История заказов');
+
 			const ordersData = action.payload.success && action.payload.orders ? action.payload.orders : [];
-			state.orderFeed = ordersData;
-			state.total = action.payload.total || 0;
-			state.totalToday = action.payload.totalToday || 0;
+			state.ordersHistory = ordersData.reverse();
 		});
 });
