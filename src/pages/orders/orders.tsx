@@ -23,22 +23,17 @@ const Orders = (): JSX.Element => {
 
 	useEffect(() => {
 		if (!ingredients) {
-			//@ts-ignore
 			dispatch(getIngredients());
 		}
 
-		//@ts-ignore
 		dispatch(ordersHistoryConnect(`wss://norma.nomoreparties.space/orders?token=${localStorage.getItem(ACCESS_TOKEN_STORAGE_KEY)}`));
 
 		return () => {
-			//@ts-ignore
 			dispatch(ordersHistoryDisconnect());
 		};
 	}, []);
 
 	const handleOpenModal = (order: IOrderResultType): void => {
-		console.log(order);
-		//@ts-ignore
 		dispatch({
 			type: SET_CURRENT_ORDER,
 			payload: order,

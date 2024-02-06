@@ -55,7 +55,6 @@ const BurgerConstructor = ({extraClass}: IBurgerConstructorProps): JSX.Element =
 	}));
 
 	const burgerPrice = useMemo<number>(() => {
-		//@ts-ignore
 		return getBurgerPrice(burgerIngredients);
 	}, [burgerIngredients]);
 
@@ -69,12 +68,12 @@ const BurgerConstructor = ({extraClass}: IBurgerConstructorProps): JSX.Element =
 			isHoverUp: monitor.isOver(),
 		}),
 		drop(item) {
-			//@ts-ignore
-			dispatch({
-				type: ADD_BUN,
-				// @ts-ignore
-				payload: ingredients.bun.filter(el => el._id === item.id)[0],
-			});
+			if (ingredients && ingredients.bun) {
+				dispatch({
+					type: ADD_BUN,
+					payload: ingredients.bun.filter(el => el._id === item.id)[0],
+				});
+			}
 		},
 	});
 
@@ -84,12 +83,12 @@ const BurgerConstructor = ({extraClass}: IBurgerConstructorProps): JSX.Element =
 			isHoverLow: monitor.isOver(),
 		}),
 		drop(item) {
-			//@ts-ignore
-			dispatch({
-				type: ADD_BUN,
-				//@ts-ignore
-				payload: ingredients.bun.filter(el => el._id === item.id)[0],
-			});
+			if (ingredients && ingredients.bun) {
+				dispatch({
+					type: ADD_BUN,
+					payload: ingredients.bun.filter(el => el._id === item.id)[0],
+				});
+			}
 		},
 	});
 
@@ -99,7 +98,6 @@ const BurgerConstructor = ({extraClass}: IBurgerConstructorProps): JSX.Element =
 			isHoverFilling: monitor.isOver(),
 		}),
 		drop(item) {
-			//@ts-ignore
 			dispatch(
 				// @ts-ignore
 				addFillingIngridient(ingredients[item.type].filter(el => el._id === item.id)[0])
@@ -111,7 +109,6 @@ const BurgerConstructor = ({extraClass}: IBurgerConstructorProps): JSX.Element =
 
 	const handleCreateOrder = (): void => {
 		if (user) {
-			//@ts-ignore
 			const ingredientIds = getOrderDataForRequest(burgerIngredients);
 			//@ts-ignore
 			dispatch(createOrder(ingredientIds));
@@ -121,12 +118,10 @@ const BurgerConstructor = ({extraClass}: IBurgerConstructorProps): JSX.Element =
 	};
 
 	const handleClearOrder = (): void => {
-		//@ts-ignore
 		dispatch({
 			type: CLEAR_ORDER_INFO
 		});
 
-		//@ts-ignore
 		dispatch({
 			type: DELETE_ALL_BURGER_INGREADIENTS,
 		});

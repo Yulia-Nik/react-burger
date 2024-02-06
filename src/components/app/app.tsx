@@ -36,7 +36,6 @@ function App(): JSX.Element {
 	const navigate = useNavigate();
 
 	const handleCloseModalIngredient = (): void => {
-		//@ts-ignore
 		dispatch({
 			type: DELETE_CURRENT_INGREDIENT
 		});
@@ -45,7 +44,6 @@ function App(): JSX.Element {
 	};
 
 	const handleCloseModalOrder = (url: string): void => {
-		//@ts-ignore
 		dispatch({
 			type: DELETE_CURRENT_ORDER
 		});
@@ -54,7 +52,6 @@ function App(): JSX.Element {
 	};
 
 	useEffect(() => {
-		//@ts-ignore
 		dispatch(checkUserAuth());
 	}, []);
 

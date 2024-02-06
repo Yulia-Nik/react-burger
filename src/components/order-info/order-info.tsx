@@ -2,7 +2,7 @@ import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-component
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from '../../services/store';
 import { getIngredients } from '../../services/ingredients/actions';
-import { calculateBurgerPrice, getBurgerIngredientsData, getStatusOrderName } from '../../utils/data-utils';
+import { calculateBurgerPrice, getBurgerIngredientsData } from '../../utils/data-utils';
 import { IOrderResultType, IIngredientType } from '../../utils/types';
 import IngredientIcon from '../ingredient-icon/ingredient-icon';
 import OrderStatus from '../order-status/order-status';
@@ -26,7 +26,6 @@ const OrderInfo = ({ data }: IOrderInfoProps): JSX.Element => {
 
 	useEffect(() => {
 		if (!ingredients) {
-			//@ts-ignore
 			dispatch(getIngredients());
 		}
 	}, []);
@@ -37,33 +36,26 @@ const OrderInfo = ({ data }: IOrderInfoProps): JSX.Element => {
 		const burgerPrice = calculateBurgerPrice(ingredientsData);
 		setPrice(burgerPrice);
 
-		//@ts-ignore
-		const result = ingredientsData.reduce((acc, item) => {
-			//@ts-ignore
-			if (acc.some(el => el._id === item._id)) {
-				return acc;
-			} else {
-				const count: number = ingredientsData.filter(el => el._id === item._id).length;
+		const result = ingredientsData.reduce(
+			(acc: Array<TIngredientGroup>, item: IIngredientType): Array<TIngredientGroup> => {
+				if (acc.some(el => el._id === item._id)) {
+					return acc;
+				} else {
+					const count: number = ingredientsData.filter(el => el._id === item._id).length;
 
-				return [
-					...acc,
-					{
-						...item,
-						count,
-					},
-				];
+					return [
+						...acc,
+						{
+							...item,
+							count,
+						},
+					];
+				}
 			}
-		}, []);
+			, []);
 
-		//@ts-ignore
 		setIngredientsGroups(result);
 	}, [ingredients]);
-
-	// useEffect(() => {
-	// 	debugger;
-	// 	const burgerPrice = calculateBurgerPrice(ingredientsGroups);
-	// 	setPrice(burgerPrice);
-	// }, [ingredientsGroups]);
 
 	return (
 		<section className={styles.container}>

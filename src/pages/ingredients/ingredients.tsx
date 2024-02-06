@@ -13,7 +13,6 @@ const Ingredients = (): JSX.Element => {
 	const { ingredients, isLoading } = useSelector(store => store.ingredients);
 	const currentIngredient = ingredients ? getIngredientById(ingredients, id) : null;
 
-	//@ts-ignore
 	useEffect(() => dispatch(getIngredients()), []);
 
 	return (

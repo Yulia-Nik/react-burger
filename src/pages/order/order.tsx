@@ -5,6 +5,7 @@ import { DELETE_CURRENT_ORDER, SET_CURRENT_ORDER } from '../../services/current-
 import { useDispatch, useSelector } from '../../services/store';
 import { BASE_URL } from '../../utils/constants';
 import { getResponse } from '../../utils/request-utils';
+import { IOrderResultType } from '../../utils/types';
 
 import styles from './order.module.css';
 
@@ -19,10 +20,9 @@ const getOrderNumberFromPath = (): null | string => {
 	return result;
 };
 
-//@ts-ignore
-const findOrderData = (orders, number) => {
+const findOrderData = (orders: Array<IOrderResultType>, number: string) => {
 	//@ts-ignore
-	const result = orders.find(el => el.number === number);
+	const result: Array<IOrderResultType> = orders.find(el => el.number === number);
 
 	return result.length ? result[0] : null;
 };
@@ -47,10 +47,8 @@ const Order = (): JSX.Element => {
 								const result = findOrderData(orderFeed, orderNumber);
 
 								if (result) {
-									//@ts-ignore
 									dispatch({
 										type: SET_CURRENT_ORDER,
-										//@ts-ignore
 										payload: result,
 									});
 								}
@@ -61,10 +59,8 @@ const Order = (): JSX.Element => {
 								const result = findOrderData(ordersHistory, orderNumber);
 
 								if (result) {
-									//@ts-ignore
 									dispatch({
 										type: SET_CURRENT_ORDER,
-										//@ts-ignore
 										payload: result,
 									});
 								}
@@ -89,14 +85,13 @@ const Order = (): JSX.Element => {
 								.catch(err => {
 									setLoaderStatus(false);
 									console.error(`Произошла ошибка: ${err}`);
-									//@ts-ignore
+
 									dispatch({
 										type: DELETE_CURRENT_ORDER,
 									});
 								});
 							break;
 						default:
-							//@ts-ignore
 							dispatch({
 								type: DELETE_CURRENT_ORDER,
 							});

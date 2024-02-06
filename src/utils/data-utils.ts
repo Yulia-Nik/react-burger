@@ -1,7 +1,7 @@
 import { IIngredientType, IResultIngredientsData } from './types';
 
 interface IBurgerIngredients {
-	bun:  IIngredientType;
+	bun:  IIngredientType | null;
 	filling: Array<IIngredientType>;
 }
 
@@ -83,7 +83,10 @@ export const getOrderDataForRequest = (data: IBurgerIngredients): Array<string> 
 	data.filling.forEach(el => {
 		result.push(el._id);
 	});
-	result.push(data.bun._id);
+
+	if (data.bun) {
+		result.push(data?.bun._id);
+	}
 
 	return result;
 };

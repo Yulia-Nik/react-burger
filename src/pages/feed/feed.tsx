@@ -4,7 +4,6 @@ import OrderCard from '../../components/order-card/order-card';
 import OrderNumber from '../../components/order-number/order-number';
 import LuminousText from '../../components/luminous-text/luminous-text';
 import { useDispatch, useSelector } from '../../services/store';
-import { WebsocketStatus } from '../../types/socket';
 import { IOrderResultType } from '../../utils/types';
 import {
 	connect as orderFeedConnect,
@@ -25,22 +24,18 @@ const MAX_COUNT_ORDERS_ON_PANEL = 20;
 const Feed = (): JSX.Element => {
 	const dispatch = useDispatch();
 	const { ingredients } = useSelector(store => store.ingredients);
-	const { orderFeed, status, total, totalToday } = useSelector(store => store.orderFeed);
+	const { orderFeed, total, totalToday } = useSelector(store => store.orderFeed);
 	const [orderPanelData, setOrderPanelData] = useState<IOrderPanelData | null>(null);
-	const isDisconnected: boolean = status !== WebsocketStatus.OPEN;
 	const location = useLocation();
 
 	useEffect(() => {
 		if (!ingredients) {
-			// @ts-ignore
 			dispatch(getIngredients());
 		}
 
-		//@ts-ignore
 		dispatch(orderFeedConnect('wss://norma.nomoreparties.space/orders/all'));
 
 		return () => {
-			//@ts-ignore
 			dispatch(orderFeedDisconnect());
 		};
 	}, []);
@@ -91,8 +86,6 @@ const Feed = (): JSX.Element => {
 	}, [orderFeed]);
 
 	const handleOpenModal = (order: IOrderResultType): void => {
-		console.log(order);
-		//@ts-ignore
 		dispatch({
 			type: SET_CURRENT_ORDER,
 			payload: order,

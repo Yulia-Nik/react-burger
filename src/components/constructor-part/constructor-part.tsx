@@ -15,7 +15,6 @@ const ConstructorPart = ({ingredient, type, isLocked}: IConstructorPartProps): J
 	const dispatch = useDispatch();
 
 	const handleDelete = (): void => {
-		//@ts-ignore
 		dispatch({
 			type: DELETE_BURGER_INGREDIENT,
 			payload: ingredient,

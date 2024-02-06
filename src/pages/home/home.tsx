@@ -16,7 +16,6 @@ const Home = (): JSX.Element => {
 	
 	useEffect(() => {
 		if (!ingredients) {
-			//@ts-ignore
 			dispatch(getIngredients());
 		}
 	}, []);

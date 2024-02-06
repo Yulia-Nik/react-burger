@@ -63,7 +63,6 @@ const Profile = (): JSX.Element => {
 	const handleOnSave = (event: FormEvent<HTMLFormElement>): void => {
 		event.preventDefault();
 
-		//@ts-ignore
 		dispatch(updateUserInfo({
 			name: name || user?.name,
 			email: email || user?.email,
