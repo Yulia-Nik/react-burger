@@ -10,3 +10,10 @@
 	height: 100%;
 	list-style-type: none;
 }
+
+.link,
+.link:hover,
+.link:active {
+	color: #ffffff;
+	text-decoration: none;
+}

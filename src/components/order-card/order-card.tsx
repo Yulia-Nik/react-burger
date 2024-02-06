@@ -1,7 +1,7 @@
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect, useState } from 'react';
 import { useSelector } from '../../services/store';
-import { getStatusOrderName, getBurgerIngredientsData } from '../../utils/data-utils';
+import { getStatusOrderName, getBurgerIngredientsData, calculateBurgerPrice } from '../../utils/data-utils';
 import { IIngredientType, IOrderResultType } from '../../utils/types';
 import IngredientIcon from '../ingredient-icon/ingredient-icon';
 import Price from '../price/price';
@@ -20,20 +20,13 @@ const OrderCard = (props: TOrderCardProps): JSX.Element => {
 	const [images, setImages] = useState<Array<string>>([]);
 	const [price, setPrice] = useState<number>(0);
 
-	const calculateBurgerPrice = (ingredientsData: Array<IIngredientType>): number => {
-		const result = ingredientsData.reduce((acc, elem) => {
-			return acc + elem.price;
-		}, 0);
-
-		return result;
-	};
-
 	useEffect(() => {
 		const burgerIngredientsData = getBurgerIngredientsData(ingredients, props.ingredients);
 		setOrderIngredients(burgerIngredientsData);
 	}, []);
 
 	useEffect(() => {
+		debugger;
 		const burgerPrice = calculateBurgerPrice(orderIngredients);
 		setPrice(burgerPrice);
 

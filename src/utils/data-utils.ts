@@ -141,3 +141,17 @@ export const getBurgerIngredientsData = (ingredients: IResultIngredientsData | n
 
 	return result;
 };
+
+/**
+ * Возвращает стоимость бургера из заказа
+ * 
+ * @param {Array} ingredientsData - массив ингредиентов бургера
+ * @returns {number}
+ */
+export const calculateBurgerPrice = (ingredientsData: Array<IIngredientType>): number => {
+	const result = ingredientsData.reduce((acc, elem) => {
+		return acc + elem.price;
+	}, 0);
+
+	return result;
+};

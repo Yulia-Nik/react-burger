@@ -44,13 +44,13 @@ function App(): JSX.Element {
 		navigate('/', {replace: true});
 	};
 
-	const handleCloseModalOrder = (): void => {
+	const handleCloseModalOrder = (url: string): void => {
 		//@ts-ignore
 		dispatch({
 			type: DELETE_CURRENT_ORDER
 		});
 
-		navigate('/feed', {replace: true});
+		navigate(url, {replace: true});
 	};
 
 	useEffect(() => {
@@ -74,6 +74,7 @@ function App(): JSX.Element {
 						<Route path="/profile" element={<OnlyAuth component={<Profile />} />} />
 						<Route path="/ingredients/:id" element={<Ingredients />} />
 						<Route path="/profile/orders" element={<OnlyAuth component={<Orders />} />} />
+						<Route path="/profile/orders/:id" element={<OnlyAuth component={<Order />} />} />
 						<Route path="/feed" element={<Feed />} />
 						<Route path="/feed/:id" element={<Order />} />
 					</Routes>
@@ -93,7 +94,16 @@ function App(): JSX.Element {
 							<Route path="/feed/:id" element={(
 								<Modal
 									title={<div className="text text_type_digits-default">#{currentOrder.number}</div>}
-									onClose={handleCloseModalOrder}
+									onClose={() => handleCloseModalOrder('/feed')}
+								>
+									<OrderInfo data={currentOrder} />
+								</Modal>
+							)} />
+
+							<Route path="/profile/orders/:id" element={(
+								<Modal
+									title={<div className="text text_type_digits-default">#{currentOrder.number}</div>}
+									onClose={() => handleCloseModalOrder('/profile/orders')}
 								>
 									<OrderInfo data={currentOrder} />
 								</Modal>

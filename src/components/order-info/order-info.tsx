@@ -1,7 +1,8 @@
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect, useState } from 'react';
-import { useSelector } from '../../services/store';
-import { getBurgerIngredientsData, getStatusOrderName } from '../../utils/data-utils';
+import { useSelector, useDispatch } from '../../services/store';
+import { getIngredients } from '../../services/ingredients/actions';
+import { calculateBurgerPrice, getBurgerIngredientsData, getStatusOrderName } from '../../utils/data-utils';
 import { IOrderResultType, IIngredientType } from '../../utils/types';
 import IngredientIcon from '../ingredient-icon/ingredient-icon';
 import OrderStatus from '../order-status/order-status';
@@ -18,11 +19,24 @@ interface IOrderInfoProps {
 }
 
 const OrderInfo = ({ data }: IOrderInfoProps): JSX.Element => {
+	const dispatch = useDispatch();
 	const { ingredients } = useSelector(store => store.ingredients);
 	const [ingredientsGroups, setIngredientsGroups] = useState<Array<TIngredientGroup>>([]);
+	const [price, setPrice] = useState<number>(0);
+
+	useEffect(() => {
+		if (!ingredients) {
+			//@ts-ignore
+			dispatch(getIngredients());
+		}
+	}, []);
 
 	useEffect(() => {
 		const ingredientsData = getBurgerIngredientsData(ingredients, data.ingredients);
+
+		const burgerPrice = calculateBurgerPrice(ingredientsData);
+		setPrice(burgerPrice);
+
 		//@ts-ignore
 		const result = ingredientsData.reduce((acc, item) => {
 			//@ts-ignore
@@ -43,7 +57,13 @@ const OrderInfo = ({ data }: IOrderInfoProps): JSX.Element => {
 
 		//@ts-ignore
 		setIngredientsGroups(result);
-	}, []);
+	}, [ingredients]);
+
+	// useEffect(() => {
+	// 	debugger;
+	// 	const burgerPrice = calculateBurgerPrice(ingredientsGroups);
+	// 	setPrice(burgerPrice);
+	// }, [ingredientsGroups]);
 
 	return (
 		<section className={styles.container}>
@@ -79,7 +99,7 @@ const OrderInfo = ({ data }: IOrderInfoProps): JSX.Element => {
 				<div className="text text_type_main-default text_color_inactive">
 					<FormattedDate date={new Date(data.createdAt)} />
 				</div>
-				<Price price={9999} />
+				<Price price={price} />
 			</div>
 		</section>
 	);

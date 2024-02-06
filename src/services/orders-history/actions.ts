@@ -9,7 +9,7 @@ export const wsClose = createAction('ORDERS_HISTORY_WS_CLOSE');
 export const wsError = createAction<string, 'ORDERS_HISTORY_WS_ERROR'>('ORDERS_HISTORY_WS_ERROR');
 export const wsMessage = createAction<any, 'ORDERS_HISTORY_WS_MESSAGE'>('ORDERS_HISTORY_WS_MESSAGE');
 
-export type TOrderFeedActions =
+export type TOrdersHistoryActions =
 	ReturnType<typeof connect>
 	| ReturnType<typeof disconnect>
 	| ReturnType<typeof wsConnecting>

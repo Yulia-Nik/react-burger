@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router';
+import { Link } from 'react-router-dom';
 import OrderCard from '../../components/order-card/order-card';
 import ProfileSidebar from '../../components/profile-sidebar/profile-sidebar';
 import { useDispatch, useSelector } from '../../services/store';
@@ -7,7 +9,9 @@ import {
 	disconnect as ordersHistoryDisconnect,
 } from '../../services/orders-history/actions';
 import { getIngredients } from '../../services/ingredients/actions';
+import { SET_CURRENT_ORDER } from '../../services/current-order/actions';
 import { ACCESS_TOKEN_STORAGE_KEY } from '../../utils/constants';
+import { IOrderResultType } from '../../utils/types';
 
 import styles from './orders.module.css';
 
@@ -15,6 +19,7 @@ const Orders = (): JSX.Element => {
 	const dispatch = useDispatch();
 	const { ingredients } = useSelector(store => store.ingredients);
 	const { ordersHistory } = useSelector(store => store.ordersHistory);
+	const location = useLocation();
 
 	useEffect(() => {
 		if (!ingredients) {
@@ -31,6 +36,15 @@ const Orders = (): JSX.Element => {
 		};
 	}, []);
 
+	const handleOpenModal = (order: IOrderResultType): void => {
+		console.log(order);
+		//@ts-ignore
+		dispatch({
+			type: SET_CURRENT_ORDER,
+			payload: order,
+		});
+	};
+
 	return (
 		<>
 			<ProfileSidebar />
@@ -39,13 +53,20 @@ const Orders = (): JSX.Element => {
 					<ul className={styles.list}>
 						{ordersHistory.map((item, index) =>
 							<li key={index}>
-								<OrderCard
-									name={item.name}
-									number={item.number}
-									createdAt={item.createdAt}
-									ingredients={item.ingredients}
-									status={item.status}
-								/>
+								<Link
+									className={styles.link}
+									to={`/profile/orders/:${item.number}`}
+									state={{ backgroundLocation: location }}
+									onClick={() => handleOpenModal(item)}
+								>
+									<OrderCard
+										name={item.name}
+										number={item.number}
+										createdAt={item.createdAt}
+										ingredients={item.ingredients}
+										status={item.status}
+									/>
+								</Link>
 							</li>
 						)}
 					</ul>
