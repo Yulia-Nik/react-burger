@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import OrderCard from '../../components/order-card/order-card';

@@ -7,9 +7,7 @@ import {
 } from '../../utils/constants';
 import { getResponse } from '../../utils/request-utils';
 import { IUserData } from '../../utils/types';
-import {
-	fetchWithRefresh
-} from '../../utils/auth-utils';
+import { fetchWithRefresh } from '../../utils/auth-utils';
 import { store } from '../store';
 
 interface ISetAuthCheckedAction {
@@ -24,7 +22,11 @@ interface ISetUser {
 
 interface IUserDataResponse {
 	success: boolean;
-	user?: IUserData;
+	user: IUserData;
+}
+
+interface ILogoutResponse {
+	success: boolean;
 }
 
 export type TAuthActions = ISetUser | ISetAuthCheckedAction;
@@ -34,10 +36,6 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<TReturnType = void> = ActionCreator<
 	ThunkAction<TReturnType, Action, RootState, TAuthActions>
 >;
-
-// interface AppDispatch<TReturnType = void> = (
-// 	action: AppActions | AppThunk<TReturnType>
-// ) => TReturnType;
 
 export const SET_AUTH_CHECKED: 'SET_AUTH_CHECKED' = 'SET_AUTH_CHECKED';
 
@@ -53,11 +51,11 @@ export const setUser = (user: null | IUserData): ISetUser => ({
 	payload: user,
 });
 
-export const getUser = () => {
+export const getUser = (): void => {
 	// @ts-ignore
 	return async dispatch => {
 		try {
-			const res = await fetchWithRefresh(`${BASE_URL}auth/user`, {
+			const res: IUserDataResponse = await fetchWithRefresh(`${BASE_URL}auth/user`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json;charset=utf-8',
@@ -65,9 +63,7 @@ export const getUser = () => {
 				},
 			});
 
-			//@ts-ignore
 			if (res.success) {
-				//@ts-ignore
 				dispatch(setUser(res.user));
 			} else {
 				dispatch(setUser(null));
@@ -105,9 +101,9 @@ export const logout = () => {
 			},
 			body: JSON.stringify({token: localStorage.getItem(REFRESH_TOKEN_STORAGE_KEY)})
 		})
-			.then(res => getResponse(res))
+			.then((res: Response) => getResponse(res))
 			.then(res => {
-				//@ts-ignore
+				// @ts-ignore
 				if (res.success) {
 					localStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY);
 					localStorage.removeItem(REFRESH_TOKEN_STORAGE_KEY);
@@ -116,11 +112,10 @@ export const logout = () => {
 			});
 };
 
-//@ts-ignore
-export const updateUserInfo = data => {
+export const updateUserInfo = (data: IUserData) => {
 	//@ts-ignore
 	return async dispatch => {
-		const res = await fetchWithRefresh(`${BASE_URL}auth/user`, {
+		const res: IUserDataResponse = await fetchWithRefresh(`${BASE_URL}auth/user`, {
 			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json;charset=utf-8',
@@ -129,9 +124,7 @@ export const updateUserInfo = data => {
 			body: JSON.stringify(data)
 		});
 
-		//@ts-ignore
 		if (res.success) {
-			//@ts-ignore
 			dispatch(setUser(res.user));
 		}
 	};

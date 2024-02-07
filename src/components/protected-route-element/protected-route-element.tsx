@@ -1,5 +1,5 @@
 import { Navigate, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/store';
 
 interface IPageComponentProps {
 	component: JSX.Element;
@@ -11,9 +11,7 @@ interface IProtectedRouteElementProps extends IPageComponentProps {
 
 const ProtectedRouteElement = ({component, onlyUnAuth = false}: IProtectedRouteElementProps): JSX.Element | null => {
 	const { user, isAuthChecked } = useSelector(store => ({
-		// @ts-ignore
 		user: store.auth.user,
-		// @ts-ignore
 		isAuthChecked: store.auth.isAuthChecked,
 	}));
 	const location = useLocation();

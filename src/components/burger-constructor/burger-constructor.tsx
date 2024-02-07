@@ -109,7 +109,7 @@ const BurgerConstructor = ({extraClass}: IBurgerConstructorProps): JSX.Element =
 
 	const handleCreateOrder = (): void => {
 		if (user) {
-			const ingredientIds = getOrderDataForRequest(burgerIngredients);
+			const ingredientIds: Array<string> = getOrderDataForRequest(burgerIngredients);
 			//@ts-ignore
 			dispatch(createOrder(ingredientIds));
 		} else {

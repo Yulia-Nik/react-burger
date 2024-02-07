@@ -71,10 +71,9 @@ const Order = (): JSX.Element => {
 								.then(res => getResponse(res))
 								.then(res => {
 									setLoaderStatus(false);
-									console.log(res);
+
 									//@ts-ignore
 									if (res.success && res?.orders.length) {
-										//@ts-ignore
 										dispatch({
 											type: SET_CURRENT_ORDER,
 											//@ts-ignore

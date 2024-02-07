@@ -1,12 +1,9 @@
-import { createStore, applyMiddleware } from 'redux';
-import { thunk } from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
 import {
 	useDispatch as dispatchHook,
 	useSelector as selectorHook,
 	TypedUseSelectorHook,
 } from 'react-redux';
-import { ThunkAction, configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { rootReducer } from './reducer';
 import { socketMiddleware } from './middleware/socket-middleware';
 import {

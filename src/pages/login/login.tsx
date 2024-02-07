@@ -55,7 +55,6 @@ const Login = (): JSX.Element => {
 			.then(res => getResponse<ILoginResponse>(res))
 			.then(res => {
 				if (res.success) {
-					//@ts-ignore
 					dispatch({
 						type: SET_USER,
 						payload: res.user,

@@ -30,8 +30,8 @@ export interface IRefreshToken {
 };
 
 export interface IUserData {
-	email: string;
-	name: string;
+	email?: string;
+	name?: string;
 	password?: string;
 };
 
