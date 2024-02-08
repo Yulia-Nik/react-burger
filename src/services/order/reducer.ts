@@ -7,7 +7,7 @@ import {
 	TOrderActions,
 } from './actions';
 
-interface IOrderStore {
+export interface IOrderStore {
 	order: null | IOrderType;
 	isLoading: boolean;
 	error: any;
@@ -38,7 +38,6 @@ export const orderReducer = (state = initialState, action: TOrderActions): IOrde
 				...state,
 				isLoading: false,
 				order: null,
-				error: action.payload,
 			};
 		case CLEAR_ORDER_INFO:
 			return {

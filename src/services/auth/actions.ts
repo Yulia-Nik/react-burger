@@ -1,5 +1,5 @@
 import { ThunkAction } from 'redux-thunk';
-import { Action, ActionCreator } from 'redux';
+import { Action, ActionCreator, UnknownAction } from 'redux';
 import {
 	BASE_URL,
 	ACCESS_TOKEN_STORAGE_KEY,
@@ -8,7 +8,8 @@ import {
 import { getResponse } from '../../utils/request-utils';
 import { IUserData } from '../../utils/types';
 import { fetchWithRefresh } from '../../utils/auth-utils';
-import { store } from '../store';
+import { AppDispatch, store } from '../store';
+import { IAuthStore } from './reducer';
 
 interface ISetAuthCheckedAction {
 	type: typeof SET_AUTH_CHECKED;
@@ -27,6 +28,7 @@ interface IUserDataResponse {
 
 interface ILogoutResponse {
 	success: boolean;
+	message: string;
 }
 
 export type TAuthActions = ISetUser | ISetAuthCheckedAction;
@@ -51,8 +53,7 @@ export const setUser = (user: null | IUserData): ISetUser => ({
 	payload: user,
 });
 
-export const getUser = (): void => {
-	// @ts-ignore
+export const getUser = (): ThunkAction<void, IAuthStore, unknown, TAuthActions> => {
 	return async dispatch => {
 		try {
 			const res: IUserDataResponse = await fetchWithRefresh(`${BASE_URL}auth/user`, {
@@ -91,8 +92,7 @@ export const checkUserAuth = () => {
 	};
 };
 
-export const logout = () => {
-	//@ts-ignore
+export const logout = (): ThunkAction<void, IAuthStore, unknown, TAuthActions> => {
 	return dispatch =>
 		fetch(`${BASE_URL}auth/logout`, {
 			method: 'POST',
@@ -101,9 +101,8 @@ export const logout = () => {
 			},
 			body: JSON.stringify({token: localStorage.getItem(REFRESH_TOKEN_STORAGE_KEY)})
 		})
-			.then((res: Response) => getResponse(res))
-			.then(res => {
-				// @ts-ignore
+			.then((res: Response): Promise<ILogoutResponse> => getResponse(res))
+			.then((res: ILogoutResponse): void => {
 				if (res.success) {
 					localStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY);
 					localStorage.removeItem(REFRESH_TOKEN_STORAGE_KEY);
@@ -112,8 +111,7 @@ export const logout = () => {
 			});
 };
 
-export const updateUserInfo = (data: IUserData) => {
-	//@ts-ignore
+export const updateUserInfo = (data: IUserData): ThunkAction<void, IAuthStore, unknown, TAuthActions> => {
 	return async dispatch => {
 		const res: IUserDataResponse = await fetchWithRefresh(`${BASE_URL}auth/user`, {
 			method: 'PATCH',

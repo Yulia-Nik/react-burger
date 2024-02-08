@@ -1,7 +1,7 @@
 export interface IIngredientType {
 	_id: string;
 	name: string;
-	type: 'bun' | 'main' | 'sauce';
+	type: keyof IResultIngredientsData;
 	proteins: number;
 	fat: number;
 	carbohydrates: number;

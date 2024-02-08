@@ -26,7 +26,6 @@ const OrderCard = (props: TOrderCardProps): JSX.Element => {
 	}, []);
 
 	useEffect(() => {
-		debugger;
 		const burgerPrice = calculateBurgerPrice(orderIngredients);
 		setPrice(burgerPrice);
 

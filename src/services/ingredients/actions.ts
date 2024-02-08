@@ -1,5 +1,12 @@
 import { getResponse } from '../../utils/request-utils';
 import { BASE_URL } from '../../utils/constants';
+import { IIngredientType } from '../../utils/types';
+
+interface IGetIngredientsResponse {
+	success: boolean;
+	data: Array<IIngredientType>;
+	status?: string;
+}
 
 interface IGetIngredientsListAction {
 	type: typeof GET_INGREDIENTS_LIST;
@@ -7,7 +14,7 @@ interface IGetIngredientsListAction {
 
 interface IGetIngredientsListSuccessAction {
 	type: typeof GET_INGREDIENTS_LIST_SUCCESS;
-	payload: any; // поправить
+	payload: any;
 }
 
 interface IGetIngredientsListFailedAction {
@@ -31,13 +38,11 @@ export const getIngredients = () => {
 		});
 
 		fetch(`${BASE_URL}ingredients`)
-			.then(res => getResponse(res))
-			.then(res => {
-				//@ts-ignore
+			.then((res: Response): Promise<IGetIngredientsResponse> => getResponse(res))
+			.then((res: IGetIngredientsResponse): void => {
 				if (res.success) {
 					dispatch({
 						type: GET_INGREDIENTS_LIST_SUCCESS,
-						//@ts-ignore
 						payload: res.data,
 					});
 				} else {
@@ -45,7 +50,7 @@ export const getIngredients = () => {
 						type: GET_INGREDIENTS_LIST_FAILED,
 						payload: res,
 					});
-					//@ts-ignore
+
 					throw new Error(`Ошибка ${res.status}`);
 				}
 			})

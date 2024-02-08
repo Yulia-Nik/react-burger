@@ -5,7 +5,7 @@ import {
 	TAuthActions,
 } from './actions';
 
-interface IAuthStore {
+export interface IAuthStore {
 	user: null | IUserData;
 	isAuthChecked: boolean;
 }

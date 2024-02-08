@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 import Loader from '../../components/loader/loader';
 import OrderInfo from '../../components/order-info/order-info';
 import { DELETE_CURRENT_ORDER, SET_CURRENT_ORDER } from '../../services/current-order/actions';
@@ -8,6 +9,11 @@ import { getResponse } from '../../utils/request-utils';
 import { IOrderResultType } from '../../utils/types';
 
 import styles from './order.module.css';
+
+interface IGetOrderResponse {
+	success: boolean;
+	orders: Array<IOrderResultType>;
+}
 
 const getOrderNumberFromPath = (): null | string => {
 	const pathnameParts: Array<string> = window.location.pathname.split('/');
@@ -20,7 +26,7 @@ const getOrderNumberFromPath = (): null | string => {
 	return result;
 };
 
-const findOrderData = (orders: Array<IOrderResultType>, number: string) => {
+const findOrderData = (orders: Array<IOrderResultType>, number: string): IOrderResultType | null => {
 	//@ts-ignore
 	const result: Array<IOrderResultType> = orders.find(el => el.number === number);
 
@@ -68,15 +74,13 @@ const Order = (): JSX.Element => {
 							break;
 						case 2:
 							fetch(`${BASE_URL}orders/${orderNumber}`)
-								.then(res => getResponse(res))
-								.then(res => {
+								.then((res: Response): Promise<IGetOrderResponse> => getResponse(res))
+								.then((res: IGetOrderResponse): void => {
 									setLoaderStatus(false);
 
-									//@ts-ignore
 									if (res.success && res?.orders.length) {
 										dispatch({
 											type: SET_CURRENT_ORDER,
-											//@ts-ignore
 											payload: res.orders[0],
 										});
 									}
@@ -101,7 +105,6 @@ const Order = (): JSX.Element => {
 				}
 			}
 		}
-		
 	}, []);
 
 	return (

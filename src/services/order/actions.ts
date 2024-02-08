@@ -1,6 +1,14 @@
+import { ThunkAction } from 'redux-thunk';
 import { fetchWithRefresh } from '../../utils/auth-utils';
 import { BASE_URL, ACCESS_TOKEN_STORAGE_KEY } from '../../utils/constants';
 import { IOrderType } from '../../utils/types';
+import { IOrderStore } from './reducer';
+
+interface ICreateOrderResponse {
+	success: boolean;
+	name: string;
+	order: IOrderType;
+}
 
 interface ICreateOrderAction {
 	type: typeof CREATE_ORDER;
@@ -39,14 +47,13 @@ export const CLEAR_ORDER_INFO: 'CLEAR_ORDER_INFO' = 'CLEAR_ORDER_INFO';
  * @param {Array} data - массив id ингредиентов бургера
  * @returns {void}
  */
-export const createOrder = (data: Array<string>): void => {
-	//@ts-ignore
+export const createOrder = (data: Array<string>): ThunkAction<void, IOrderStore, unknown, TOrderActions> => {
 	return async dispatch => {
 		dispatch({
 			type: CREATE_ORDER,
 		});
 
-		const res = await fetchWithRefresh(`${BASE_URL}orders`, {
+		const res: ICreateOrderResponse = await fetchWithRefresh(`${BASE_URL}orders`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json;charset=utf-8',
@@ -55,20 +62,17 @@ export const createOrder = (data: Array<string>): void => {
 			body: JSON.stringify({ingredients: data})
 		});
 
-		//@ts-ignore
 		if (res.success) {
 			dispatch({
 				type: CREATE_ORDER_SUCCESS,
-				//@ts-ignore
 				payload: res.order,
 			});
 		} else {
 			dispatch({
 				type: CREATE_ORDER_FAILED,
-				error: res,
+				payload: res,
 			});
 			console.error(`Произошла ошибка: ${res}`);
 		}
 	};
 };
-
