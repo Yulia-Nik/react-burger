@@ -34,8 +34,6 @@ export const ordersHistoryReducer = createReducer(initialState, builder => {
 			state.error = action.payload;
 		})
 		.addCase(wsMessage, (state, action) => {
-			console.log('История заказов');
-
 			const ordersData = action.payload.success && action.payload.orders ? action.payload.orders : [];
 			state.ordersHistory = ordersData.reverse();
 		});

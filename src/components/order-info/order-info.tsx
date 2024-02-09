@@ -1,7 +1,6 @@
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from '../../services/store';
-import { getIngredients } from '../../services/ingredients/actions';
+import { useSelector } from '../../services/store';
 import { calculateBurgerPrice, getBurgerIngredientsData } from '../../utils/data-utils';
 import { IOrderResultType, IIngredientType } from '../../utils/types';
 import IngredientIcon from '../ingredient-icon/ingredient-icon';
@@ -19,16 +18,9 @@ interface IOrderInfoProps {
 }
 
 const OrderInfo = ({ data }: IOrderInfoProps): JSX.Element => {
-	const dispatch = useDispatch();
 	const { ingredients } = useSelector(store => store.ingredients);
 	const [ingredientsGroups, setIngredientsGroups] = useState<Array<TIngredientGroup>>([]);
 	const [price, setPrice] = useState<number>(0);
-
-	useEffect(() => {
-		if (!ingredients) {
-			dispatch(getIngredients());
-		}
-	}, []);
 
 	useEffect(() => {
 		const ingredientsData = getBurgerIngredientsData(ingredients, data.ingredients);

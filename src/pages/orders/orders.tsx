@@ -8,7 +8,6 @@ import {
 	connect as ordersHistoryConnect,
 	disconnect as ordersHistoryDisconnect,
 } from '../../services/orders-history/actions';
-import { getIngredients } from '../../services/ingredients/actions';
 import { SET_CURRENT_ORDER } from '../../services/current-order/actions';
 import { ACCESS_TOKEN_STORAGE_KEY } from '../../utils/constants';
 import { IOrderResultType } from '../../utils/types';
@@ -17,15 +16,10 @@ import styles from './orders.module.css';
 
 const Orders = (): JSX.Element => {
 	const dispatch = useDispatch();
-	const { ingredients } = useSelector(store => store.ingredients);
 	const { ordersHistory } = useSelector(store => store.ordersHistory);
 	const location = useLocation();
 
 	useEffect(() => {
-		if (!ingredients) {
-			dispatch(getIngredients());
-		}
-
 		dispatch(ordersHistoryConnect(`wss://norma.nomoreparties.space/orders?token=${localStorage.getItem(ACCESS_TOKEN_STORAGE_KEY)}`));
 
 		return () => {
@@ -50,7 +44,7 @@ const Orders = (): JSX.Element => {
 							<li key={index}>
 								<Link
 									className={styles.link}
-									to={`/profile/orders/:${item.number}`}
+									to={`/profile/orders/${item.number}`}
 									state={{ backgroundLocation: location }}
 									onClick={() => handleOpenModal(item)}
 								>

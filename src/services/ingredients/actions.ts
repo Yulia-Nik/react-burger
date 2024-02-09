@@ -57,7 +57,7 @@ export const getIngredients = () => {
 			.catch(err => {
 				dispatch({
 					type: GET_INGREDIENTS_LIST_FAILED,
-					error: err,
+					payload: err,
 				});
 				console.error(`Произошла ошибка: ${err}`);
 			});

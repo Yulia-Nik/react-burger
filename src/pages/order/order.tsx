@@ -15,22 +15,10 @@ interface IGetOrderResponse {
 	orders: Array<IOrderResultType>;
 }
 
-const getOrderNumberFromPath = (): null | string => {
-	const pathnameParts: Array<string> = window.location.pathname.split('/');
-	let result: null | string = null;
-
-	if (pathnameParts.length > 1) {
-		result = pathnameParts[pathnameParts.length - 1].replace(':', '');
-	}
+const findOrderData = (orders: Array<IOrderResultType>, number: string): IOrderResultType | null => {
+	const result: IOrderResultType | null = orders.find(el => String(el.number) === number) || null;
 
 	return result;
-};
-
-const findOrderData = (orders: Array<IOrderResultType>, number: string): IOrderResultType | null => {
-	//@ts-ignore
-	const result: Array<IOrderResultType> = orders.find(el => el.number === number);
-
-	return result.length ? result[0] : null;
 };
 
 const Order = (): JSX.Element => {
@@ -39,70 +27,67 @@ const Order = (): JSX.Element => {
 	const { orderFeed } = useSelector(store => store.orderFeed);
 	const { ordersHistory } = useSelector(store => store.ordersHistory);
 	const [loaderStatus, setLoaderStatus] = useState<boolean>(true);
+	const { id: orderNumber } = useParams();
 
 	useEffect(() => {
-		if (!currentOrder) {
-			const orderNumber = getOrderNumberFromPath();
+		if (!currentOrder && orderNumber) {
+			let cycleCount: number = 0;
+			while (!currentOrder && cycleCount < 3) {
+				switch (cycleCount) {
+					case 0:
+						if (orderFeed.length) {
+							const result = findOrderData(orderFeed, orderNumber);
 
-			if (orderNumber) {
-				let cycleCount: number = 0;
-				while (!currentOrder && cycleCount < 3) {
-					switch (cycleCount) {
-						case 0:
-							if (orderFeed.length) {
-								const result = findOrderData(orderFeed, orderNumber);
-
-								if (result) {
-									dispatch({
-										type: SET_CURRENT_ORDER,
-										payload: result,
-									});
-								}
-							}
-							break;
-						case 1:
-							if (ordersHistory.length) {
-								const result = findOrderData(ordersHistory, orderNumber);
-
-								if (result) {
-									dispatch({
-										type: SET_CURRENT_ORDER,
-										payload: result,
-									});
-								}
-							}
-							break;
-						case 2:
-							fetch(`${BASE_URL}orders/${orderNumber}`)
-								.then((res: Response): Promise<IGetOrderResponse> => getResponse(res))
-								.then((res: IGetOrderResponse): void => {
-									setLoaderStatus(false);
-
-									if (res.success && res?.orders.length) {
-										dispatch({
-											type: SET_CURRENT_ORDER,
-											payload: res.orders[0],
-										});
-									}
-								})
-								.catch(err => {
-									setLoaderStatus(false);
-									console.error(`Произошла ошибка: ${err}`);
-
-									dispatch({
-										type: DELETE_CURRENT_ORDER,
-									});
+							if (result) {
+								dispatch({
+									type: SET_CURRENT_ORDER,
+									payload: result,
 								});
-							break;
-						default:
-							dispatch({
-								type: DELETE_CURRENT_ORDER,
-							});
-							break;
-					};
+							}
+						}
+						break;
+					case 1:
+						if (ordersHistory.length) {
+							const result = findOrderData(ordersHistory, orderNumber);
 
-					cycleCount++;
-				}
+							if (result) {
+								dispatch({
+									type: SET_CURRENT_ORDER,
+									payload: result,
+								});
+							}
+						}
+						break;
+					case 2:
+						fetch(`${BASE_URL}orders/${orderNumber}`)
+							.then((res: Response): Promise<IGetOrderResponse> => getResponse(res))
+							.then((res: IGetOrderResponse): void => {
+								setLoaderStatus(false);
+
+								if (res.success && res?.orders.length) {
+									dispatch({
+										type: SET_CURRENT_ORDER,
+										payload: res.orders[0],
+									});
+								}
+							})
+							.catch(err => {
+								setLoaderStatus(false);
+								console.error(`Произошла ошибка: ${err}`);
+
+								dispatch({
+									type: DELETE_CURRENT_ORDER,
+								});
+							});
+						break;
+					default:
+						dispatch({
+							type: DELETE_CURRENT_ORDER,
+						});
+						break;
+				};
+
+				cycleCount++;
 			}
 		}
 	}, []);

@@ -34,7 +34,6 @@ export const orderFeedReducer = createReducer(initialState, builder => {
 			state.error = action.payload;
 		})
 		.addCase(wsMessage, (state, action) => {
-			console.log('Лента заказов');
 			const ordersData = action.payload.success && action.payload.orders ? action.payload.orders : [];
 			state.orderFeed = ordersData;
 			state.total = action.payload.total || 0;

@@ -7,7 +7,7 @@ import {
 	TIngredientsActions,
 } from './actions';
 
-interface IIngredientsStore {
+export interface IIngredientsStore {
 	ingredients: IResultIngredientsData | null;
 	isLoading: boolean;
 	error: any;

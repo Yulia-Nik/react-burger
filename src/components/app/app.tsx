@@ -22,6 +22,7 @@ import OrderInfo from '../order-info/order-info';
 import { DELETE_CURRENT_INGREDIENT } from '../../services/current-ingredient/actions';
 import { DELETE_CURRENT_ORDER } from '../../services/current-order/actions';
 import { checkUserAuth } from '../../services/auth/actions';
+import { getIngredients } from '../../services/ingredients/actions';
 import { useSelector, useDispatch } from '../../services/store';
 import { OnlyAuth, OnlyUnAuth } from '../protected-route-element/protected-route-element';
 
@@ -53,6 +54,8 @@ function App(): JSX.Element {
 
 	useEffect(() => {
 		dispatch(checkUserAuth());
+
+		dispatch(getIngredients());
 	}, []);
 
 	return (
@@ -61,7 +64,7 @@ function App(): JSX.Element {
 				<AppHeader extraClass={styles.content} />
 
 				<main className={`pt-10 pb-10 pl-6 pr-6 ${styles.content} ${styles.mainContent}`}>
-					<Routes location={state?.backgroundLocation || location}>
+					<Routes location={state?.backgroundLocation && (currentIngredient || currentOrder) ? state?.backgroundLocation : location}>
 						<Route path="/" element={<Home />} />
 						<Route path="*" element={<NonExistentPage />} />
 						<Route path="/login" element={<OnlyUnAuth component={<Login />} />} />

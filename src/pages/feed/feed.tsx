@@ -9,7 +9,6 @@ import {
 	connect as orderFeedConnect,
 	disconnect as orderFeedDisconnect,
 } from '../../services/order-feed/actions';
-import { getIngredients } from '../../services/ingredients/actions';
 import { SET_CURRENT_ORDER } from '../../services/current-order/actions';
 
 import styles from './feed.module.css';
@@ -23,16 +22,11 @@ const MAX_COUNT_ORDERS_ON_PANEL = 20;
 
 const Feed = (): JSX.Element => {
 	const dispatch = useDispatch();
-	const { ingredients } = useSelector(store => store.ingredients);
 	const { orderFeed, total, totalToday } = useSelector(store => store.orderFeed);
 	const [orderPanelData, setOrderPanelData] = useState<IOrderPanelData | null>(null);
 	const location = useLocation();
 
 	useEffect(() => {
-		if (!ingredients) {
-			dispatch(getIngredients());
-		}
-
 		dispatch(orderFeedConnect('wss://norma.nomoreparties.space/orders/all'));
 
 		return () => {
@@ -105,7 +99,7 @@ const Feed = (): JSX.Element => {
 								<li key={index}>
 									<Link
 										className={styles.link}
-										to={`/feed/:${item.number}`}
+										to={`/feed/${item.number}`}
 										state={{ backgroundLocation: location }}
 										onClick={() => handleOpenModal(item)}
 									>

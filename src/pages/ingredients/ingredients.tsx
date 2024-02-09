@@ -1,19 +1,30 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 import IngredientDetails from '../../components/ingredient-details/ingredient-details';
 import Loader from '../../components/loader/loader';
 import { getIngredientById } from '../../utils/data-utils';
-import { getIngredients } from '../../services/ingredients/actions';
-import { useDispatch, useSelector } from '../../services/store';
+import { IIngredientType } from '../../utils/types';
+import { useSelector } from '../../services/store';
 
 import styles from './ingredients.module.css';
 
 const Ingredients = (): JSX.Element => {
-	const dispatch = useDispatch();
-	const id = window.location.pathname.split('/')[2] || '';
+	const { id } = useParams();
 	const { ingredients, isLoading } = useSelector(store => store.ingredients);
-	const currentIngredient = ingredients ? getIngredientById(ingredients, id) : null;
+	const [ingredientId, setIngredientId] = useState<string>('');
+	const [currentIngredient, setCurrentIngredient] = useState<IIngredientType | null>(null);
 
-	useEffect(() => dispatch(getIngredients()), []);
+	useEffect(() => {
+		if (id) {
+			setIngredientId(id.replace(':', ''));
+		}
+	}, []);
+
+	useEffect(() => {
+		if (ingredients && ingredientId) {
+			setCurrentIngredient(getIngredientById(ingredients, ingredientId));
+		}
+	}, [ingredients, ingredientId]);
 
 	return (
 		<>
