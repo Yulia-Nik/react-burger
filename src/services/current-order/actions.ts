@@ -1,4 +1,4 @@
-import { IOrderResultType, IOrderType } from '../../utils/types';
+import { IOrderResultType } from '../../utils/types';
 
 export const SET_CURRENT_ORDER: 'SET_CURRENT_ORDER' = 'SET_CURRENT_ORDER';
 
@@ -13,4 +13,4 @@ interface IDeleteCurrentOrderAction {
 	type: typeof DELETE_CURRENT_ORDER;
 }
 
-export type ICurrentOrderActions = ISetCurrentOrderAction | IDeleteCurrentOrderAction;
+export type TCurrentOrderActions = ISetCurrentOrderAction | IDeleteCurrentOrderAction;

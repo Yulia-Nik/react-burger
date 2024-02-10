@@ -25,8 +25,6 @@ import {
 	wsMessage as OrdersHistoryWSMessage,
 } from './orders-history/actions';
 
-export type RootState = ReturnType<typeof rootReducer>;
-
 const orderFeedMiddleware = socketMiddleware({
 	wsConnect: OrderFeedWSConnect,
 	wsDisconnect: OrderFeedWSDisconnect,
@@ -55,6 +53,8 @@ export const store = configureStore({
 			.concat(ordersHistoryMiddleware);
 	},
 });
+
+export type RootState = ReturnType<typeof rootReducer>;
 
 export type AppDispatch = typeof store.dispatch;
 

@@ -1,4 +1,4 @@
-import { IIngredientType, IResultIngredientsData } from './types';
+import { IIngredientType, IResultIngredientsData, TIngredientsGroupNames } from './types';
 
 interface IBurgerIngredients {
 	bun:  IIngredientType | null;
@@ -48,7 +48,7 @@ export const formatIngredientsData = (data: Array<IIngredientType>): IResultIngr
  * 
  * @returns {number}
  */
-export const getIngredientCount = (type: 'bun' | 'main' | 'sauce', id: string, burgerIngredients: IBurgerIngredients): number => {
+export const getIngredientCount = (type: TIngredientsGroupNames, id: string, burgerIngredients: IBurgerIngredients): number => {
 	if (type === 'bun') {
 		const isAdded = burgerIngredients.bun && burgerIngredients.bun._id === id;
 		return isAdded ? 2 : 0;

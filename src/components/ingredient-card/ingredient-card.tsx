@@ -2,7 +2,7 @@ import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import Price from '../price/price';
-import { IIngredientType } from '../../utils/types';
+import { IIngredientType, TIngredientsGroupNames } from '../../utils/types';
 import { getIngredientCount } from '../../utils/data-utils';
 import { SET_CURRENT_INGREDIENT } from '../../services/current-ingredient/actions';
 import { useDispatch, useSelector } from '../../services/store';
@@ -15,7 +15,7 @@ interface IIngredientCardProps {
 
 interface IDragObject {
 	id: string;
-	type: 'bun' | 'main' | 'sauce';
+	type: TIngredientsGroupNames;
 }
 
 const IngredientCard = ({ingredient}: IIngredientCardProps): JSX.Element => {

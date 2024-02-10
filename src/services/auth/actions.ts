@@ -1,5 +1,3 @@
-import { ThunkAction } from 'redux-thunk';
-import { Action, ActionCreator, UnknownAction } from 'redux';
 import {
 	BASE_URL,
 	ACCESS_TOKEN_STORAGE_KEY,
@@ -8,8 +6,7 @@ import {
 import { getResponse } from '../../utils/request-utils';
 import { IUserData } from '../../utils/types';
 import { fetchWithRefresh } from '../../utils/auth-utils';
-import { AppDispatch, store } from '../store';
-import { IAuthStore } from './reducer';
+import { AppDispatch } from '../store';
 
 interface ISetAuthCheckedAction {
 	type: typeof SET_AUTH_CHECKED;
@@ -33,12 +30,6 @@ interface ILogoutResponse {
 
 export type TAuthActions = ISetUser | ISetAuthCheckedAction;
 
-export type RootState = ReturnType<typeof store.getState>;
-
-export type AppThunk<TReturnType = void> = ActionCreator<
-	ThunkAction<TReturnType, Action, RootState, TAuthActions>
->;
-
 export const SET_AUTH_CHECKED: 'SET_AUTH_CHECKED' = 'SET_AUTH_CHECKED';
 
 export const SET_USER: 'SET_USER' = 'SET_USER';
@@ -53,8 +44,8 @@ export const setUser = (user: null | IUserData): ISetUser => ({
 	payload: user,
 });
 
-export const getUser = (): ThunkAction<void, IAuthStore, unknown, TAuthActions> => {
-	return async dispatch => {
+export const getUser = () => {
+	return async (dispatch: AppDispatch) => {
 		try {
 			const res: IUserDataResponse = await fetchWithRefresh(`${BASE_URL}auth/user`, {
 				method: 'GET',
@@ -80,8 +71,7 @@ export const getUser = (): ThunkAction<void, IAuthStore, unknown, TAuthActions> 
 };
 
 export const checkUserAuth = () => {
-	//@ts-ignore
-	return dispatch => {
+	return (dispatch: AppDispatch) => {
 		if (localStorage.getItem(ACCESS_TOKEN_STORAGE_KEY)) {
 			dispatch(setAuthChecked(true));
 			dispatch(getUser());
@@ -92,8 +82,8 @@ export const checkUserAuth = () => {
 	};
 };
 
-export const logout = (): ThunkAction<void, IAuthStore, unknown, TAuthActions> => {
-	return dispatch =>
+export const logout = () => {
+	return (dispatch: AppDispatch) =>
 		fetch(`${BASE_URL}auth/logout`, {
 			method: 'POST',
 			headers: {
@@ -111,8 +101,8 @@ export const logout = (): ThunkAction<void, IAuthStore, unknown, TAuthActions> =
 			});
 };
 
-export const updateUserInfo = (data: IUserData): ThunkAction<void, IAuthStore, unknown, TAuthActions> => {
-	return async dispatch => {
+export const updateUserInfo = (data: IUserData) => {
+	return async (dispatch: AppDispatch) => {
 		const res: IUserDataResponse = await fetchWithRefresh(`${BASE_URL}auth/user`, {
 			method: 'PATCH',
 			headers: {

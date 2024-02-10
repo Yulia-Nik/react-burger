@@ -8,7 +8,6 @@ const ProfileSidebar = (): JSX.Element => {
 	const dispatch = useDispatch();
 
 	const handleLogout = () => {
-		// @ts-ignore
 		dispatch(logout());
 	};
 

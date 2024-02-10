@@ -13,6 +13,7 @@ import { ADD_BUN, DELETE_ALL_BURGER_INGREADIENTS, addFillingIngridient } from '.
 import { createOrder, CLEAR_ORDER_INFO } from '../../services/order/actions';
 import { useSelector, useDispatch } from '../../services/store';
 import { getBurgerPrice, getOrderDataForRequest } from '../../utils/data-utils';
+import { TIngredientsGroupNames } from '../../utils/types';
 
 import styles from './burger-constructor.module.css';
 
@@ -22,7 +23,7 @@ interface IBurgerConstructorProps {
 
 interface IDragObject {
 	id: string;
-	type: 'bun' | 'main' | 'sauce';
+	type: TIngredientsGroupNames;
 }
 
 interface IUpperDropCollectedProps {
@@ -110,7 +111,6 @@ const BurgerConstructor = ({extraClass}: IBurgerConstructorProps): JSX.Element =
 	const handleCreateOrder = (): void => {
 		if (user) {
 			const ingredientIds: Array<string> = getOrderDataForRequest(burgerIngredients);
-			//@ts-ignore
 			dispatch(createOrder(ingredientIds));
 		} else {
 			navigate('/login');

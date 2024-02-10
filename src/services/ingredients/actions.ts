@@ -1,6 +1,7 @@
 import { getResponse } from '../../utils/request-utils';
 import { BASE_URL } from '../../utils/constants';
 import { IIngredientType } from '../../utils/types';
+import { AppDispatch } from '../store';
 
 interface IGetIngredientsResponse {
 	success: boolean;
@@ -31,8 +32,7 @@ export const GET_INGREDIENTS_LIST_SUCCESS: 'GET_INGREDIENTS_LIST_SUCCESS' = 'GET
 export const GET_INGREDIENTS_LIST_FAILED: 'GET_INGREDIENTS_LIST_FAILED' = 'GET_INGREDIENTS_LIST_FAILED';
 
 export const getIngredients = () => {
-	// @ts-ignore
-	return (dispatch) => {
+	return (dispatch: AppDispatch) => {
 		dispatch({
 			type: GET_INGREDIENTS_LIST,
 		});

@@ -1,8 +1,7 @@
-import { ThunkAction } from 'redux-thunk';
 import { fetchWithRefresh } from '../../utils/auth-utils';
 import { BASE_URL, ACCESS_TOKEN_STORAGE_KEY } from '../../utils/constants';
 import { IOrderType } from '../../utils/types';
-import { IOrderStore } from './reducer';
+import { AppDispatch } from '../store';
 
 interface ICreateOrderResponse {
 	success: boolean;
@@ -47,8 +46,8 @@ export const CLEAR_ORDER_INFO: 'CLEAR_ORDER_INFO' = 'CLEAR_ORDER_INFO';
  * @param {Array} data - массив id ингредиентов бургера
  * @returns {void}
  */
-export const createOrder = (data: Array<string>): ThunkAction<void, IOrderStore, unknown, TOrderActions> => {
-	return async dispatch => {
+export const createOrder = (data: Array<string>) => {
+	return async (dispatch: AppDispatch) => {
 		dispatch({
 			type: CREATE_ORDER,
 		});

@@ -1,7 +1,7 @@
 export interface IIngredientType {
 	_id: string;
 	name: string;
-	type: keyof IResultIngredientsData;
+	type: TIngredientsGroupNames;
 	proteins: number;
 	fat: number;
 	carbohydrates: number;
@@ -12,6 +12,8 @@ export interface IIngredientType {
 	image_large: string;
 	additionalClass?: string;
 };
+
+export type TIngredientsGroupNames = keyof IResultIngredientsData;
 
 export interface IBurgerIngredientType extends IIngredientType {
 	ingredientId: string;

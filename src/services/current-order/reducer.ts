@@ -2,7 +2,7 @@ import { IOrderResultType } from '../../utils/types';
 import {
 	SET_CURRENT_ORDER,
 	DELETE_CURRENT_ORDER,
-	ICurrentOrderActions,
+	TCurrentOrderActions,
 } from './actions';
 
 interface ICurrentOrderStore {
@@ -13,7 +13,7 @@ const initialState: ICurrentOrderStore = {
 	currentOrder: null,
 };
 
-export const currentOrderReducer = (state = initialState, action: ICurrentOrderActions): ICurrentOrderStore => {
+export const currentOrderReducer = (state = initialState, action: TCurrentOrderActions): ICurrentOrderStore => {
 	switch (action.type) {
 		case SET_CURRENT_ORDER:
 			return {
