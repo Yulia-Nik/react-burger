@@ -94,8 +94,7 @@ export const getOrderDataForRequest = (data: IBurgerIngredients): Array<string> 
 export const getIngredientById = (ingredients: IResultIngredientsData, id: string): IIngredientType | null => {
 	let targetIngredient: null | IIngredientType = null;
 	(Object.keys(ingredients) as Array<keyof IResultIngredientsData>).forEach(key => {
-		//@ts-ignore
-		ingredients[key].forEach((elem: IIngredientType) => {
+		ingredients[key]?.forEach((elem: IIngredientType) => {
 			if (elem._id === id) {
 				targetIngredient = elem;
 			}

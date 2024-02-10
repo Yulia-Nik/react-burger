@@ -99,10 +99,12 @@ const BurgerConstructor = ({extraClass}: IBurgerConstructorProps): JSX.Element =
 			isHoverFilling: monitor.isOver(),
 		}),
 		drop(item) {
-			dispatch(
-				// @ts-ignore
-				addFillingIngridient(ingredients[item.type].filter(el => el._id === item.id)[0])
-			);
+			const targetIngredient = ingredients ? ingredients[item.type]?.filter(el => el._id === item.id)[0] : null;
+			if (targetIngredient) {
+				dispatch(
+					addFillingIngridient(targetIngredient)
+				);
+			}
 		},
 	});
 
