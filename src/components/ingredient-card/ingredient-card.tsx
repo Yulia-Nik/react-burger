@@ -53,7 +53,7 @@ const IngredientCard = ({ingredient}: IIngredientCardProps): JSX.Element => {
 			<img alt={ingredient.name} src={ingredient.image} />
 			<Price price={ingredient.price} />
 			<div className={styles.name}>{ingredient.name}</div>
-			{count && (
+			{!!count && (
 				<Counter count={count} />
 			)}
 		</Link>
