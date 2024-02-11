@@ -1,0 +1,46 @@
+.row {
+	height: calc(100vh - 235px);
+	display: flex;
+	justify-content: space-between;
+	gap: 40px;
+}
+
+.column {
+	width: 50%;
+}
+
+.orders {
+	margin: 0;
+	padding: 0 8px 0 0;
+	height: 100%;
+	overflow-y: scroll;
+	list-style-type: none;
+}
+
+.orderPanel {
+	display: flex;
+	gap: 16px;
+}
+
+.numbersColumn {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	gap: 8px;
+	max-height: 314px;
+}
+
+.panel {
+	display: flex;
+	flex-direction: column;
+	gap: 60px;
+	height: 100%;
+	overflow-y: scroll;
+}
+
+.link,
+.link:hover,
+.link:active {
+	color: #ffffff;
+	text-decoration: none;
+}

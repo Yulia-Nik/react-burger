@@ -1,7 +1,7 @@
 export interface IIngredientType {
 	_id: string;
 	name: string;
-	type: 'bun' | 'main' | 'sauce';
+	type: TIngredientsGroupNames;
 	proteins: number;
 	fat: number;
 	carbohydrates: number;
@@ -12,6 +12,8 @@ export interface IIngredientType {
 	image_large: string;
 	additionalClass?: string;
 };
+
+export type TIngredientsGroupNames = keyof IResultIngredientsData;
 
 export interface IBurgerIngredientType extends IIngredientType {
 	ingredientId: string;
@@ -30,8 +32,9 @@ export interface IRefreshToken {
 };
 
 export interface IUserData {
-	email: string;
-	name: string;
+	email?: string;
+	name?: string;
+	password?: string;
 };
 
 export interface ILoginResponse {
@@ -61,4 +64,14 @@ export interface IOrderResponseData {
 	name: string;
 	order: IOrderType;
 	success: boolean;
+}
+
+export interface IOrderResultType {
+	createdAt: string;
+	ingredients: Array<string>;
+	name: string;
+	number: number;
+	status?: string;
+	updatedAt: string;
+	_id: string;
 }

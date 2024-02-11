@@ -1,7 +1,7 @@
-import { useDispatch } from 'react-redux';
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IBurgerIngredientType } from '../../utils/types';
 import { DELETE_BURGER_INGREDIENT } from '../../services/burger-ingredients/actions';
+import { useDispatch } from '../../services/store';
 
 import styles from './constructor-part.module.css';
 

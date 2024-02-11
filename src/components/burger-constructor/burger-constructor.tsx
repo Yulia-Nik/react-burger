@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { useNavigate } from 'react-router';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -12,7 +11,9 @@ import OrderDetails from '../order-details/order-details';
 import Loader from '../loader/loader';
 import { ADD_BUN, DELETE_ALL_BURGER_INGREADIENTS, addFillingIngridient } from '../../services/burger-ingredients/actions';
 import { createOrder, CLEAR_ORDER_INFO } from '../../services/order/actions';
+import { useSelector, useDispatch } from '../../services/store';
 import { getBurgerPrice, getOrderDataForRequest } from '../../utils/data-utils';
+import { TIngredientsGroupNames } from '../../utils/types';
 
 import styles from './burger-constructor.module.css';
 
@@ -22,7 +23,7 @@ interface IBurgerConstructorProps {
 
 interface IDragObject {
 	id: string;
-	type: 'bun' | 'main' | 'sauce';
+	type: TIngredientsGroupNames;
 }
 
 interface IUpperDropCollectedProps {
@@ -47,15 +48,10 @@ const BurgerConstructor = ({extraClass}: IBurgerConstructorProps): JSX.Element =
 		isLoading,
 		user,
 	} = useSelector(store => ({
-		// @ts-ignore
 		burgerIngredients: store.burgerIngredients.burgerIngredients,
-		// @ts-ignore
 		ingredients: store.ingredients.ingredients,
-		// @ts-ignore
 		order: store.order.order,
-		// @ts-ignore
 		isLoading: store.order.isLoading,
-		// @ts-ignore
 		user: store.auth.user,
 	}));
 
@@ -64,7 +60,7 @@ const BurgerConstructor = ({extraClass}: IBurgerConstructorProps): JSX.Element =
 	}, [burgerIngredients]);
 
 	const isActiveBtn = useMemo<boolean>(() => {
-		return burgerIngredients.bun && burgerIngredients.filling.length;
+		return Boolean(burgerIngredients.bun && burgerIngredients.filling.length);
 	}, [burgerIngredients]);
 
 	const [{ isHoverUp }, upperDropRef] = useDrop<IDragObject, unknown, IUpperDropCollectedProps>({
@@ -73,11 +69,12 @@ const BurgerConstructor = ({extraClass}: IBurgerConstructorProps): JSX.Element =
 			isHoverUp: monitor.isOver(),
 		}),
 		drop(item) {
-			dispatch({
-				type: ADD_BUN,
-				// @ts-ignore
-				payload: ingredients.bun.filter(el => el._id === item.id)[0],
-			});
+			if (ingredients && ingredients.bun) {
+				dispatch({
+					type: ADD_BUN,
+					payload: ingredients.bun.filter(el => el._id === item.id)[0],
+				});
+			}
 		},
 	});
 
@@ -87,11 +84,12 @@ const BurgerConstructor = ({extraClass}: IBurgerConstructorProps): JSX.Element =
 			isHoverLow: monitor.isOver(),
 		}),
 		drop(item) {
-			dispatch({
-				type: ADD_BUN,
-				//@ts-ignore
-				payload: ingredients.bun.filter(el => el._id === item.id)[0],
-			});
+			if (ingredients && ingredients.bun) {
+				dispatch({
+					type: ADD_BUN,
+					payload: ingredients.bun.filter(el => el._id === item.id)[0],
+				});
+			}
 		},
 	});
 
@@ -101,10 +99,12 @@ const BurgerConstructor = ({extraClass}: IBurgerConstructorProps): JSX.Element =
 			isHoverFilling: monitor.isOver(),
 		}),
 		drop(item) {
-			dispatch(
-				// @ts-ignore
-				addFillingIngridient(ingredients[item.type].filter(el => el._id === item.id)[0])
-			);
+			const targetIngredient = ingredients ? ingredients[item.type]?.filter(el => el._id === item.id)[0] : null;
+			if (targetIngredient) {
+				dispatch(
+					addFillingIngridient(targetIngredient)
+				);
+			}
 		},
 	});
 
@@ -112,8 +112,7 @@ const BurgerConstructor = ({extraClass}: IBurgerConstructorProps): JSX.Element =
 
 	const handleCreateOrder = (): void => {
 		if (user) {
-			const ingredientIds = getOrderDataForRequest(burgerIngredients);
-			// @ts-ignore
+			const ingredientIds: Array<string> = getOrderDataForRequest(burgerIngredients);
 			dispatch(createOrder(ingredientIds));
 		} else {
 			navigate('/login');

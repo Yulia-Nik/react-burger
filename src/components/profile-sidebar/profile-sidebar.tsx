@@ -1,6 +1,6 @@
-import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { logout } from '../../services/auth/actions';
+import { useDispatch } from '../../services/store';
 
 import styles from './profile-sidebar.module.css';
 
@@ -8,7 +8,6 @@ const ProfileSidebar = (): JSX.Element => {
 	const dispatch = useDispatch();
 
 	const handleLogout = () => {
-		// @ts-ignore
 		dispatch(logout());
 	};
 

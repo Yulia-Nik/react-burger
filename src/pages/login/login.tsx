@@ -1,5 +1,4 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import FormContaner from '../../components/form-container/form-container';
@@ -12,6 +11,7 @@ import {
 } from '../../utils/constants';
 import { ILoginResponse } from '../../utils/types';
 import { SET_USER } from '../../services/auth/actions';
+import { useDispatch } from '../../services/store';
 
 const additionalContent = (
 	<>

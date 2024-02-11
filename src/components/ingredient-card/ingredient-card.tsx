@@ -1,11 +1,11 @@
-import { useSelector, useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import Price from '../price/price';
-import { IIngredientType } from '../../utils/types';
+import { IIngredientType, TIngredientsGroupNames } from '../../utils/types';
 import { getIngredientCount } from '../../utils/data-utils';
 import { SET_CURRENT_INGREDIENT } from '../../services/current-ingredient/actions';
+import { useDispatch, useSelector } from '../../services/store';
 
 import styles from './ingredient-card.module.css';
 
@@ -15,12 +15,11 @@ interface IIngredientCardProps {
 
 interface IDragObject {
 	id: string;
-	type: 'bun' | 'main' | 'sauce';
+	type: TIngredientsGroupNames;
 }
 
 const IngredientCard = ({ingredient}: IIngredientCardProps): JSX.Element => {
 	const dispatch = useDispatch();
-	// @ts-ignore
 	const burgerIngredients = useSelector(store => store.burgerIngredients.burgerIngredients);
 
 	const [, dragRef] = useDrag<IDragObject, unknown, unknown>({
@@ -54,7 +53,7 @@ const IngredientCard = ({ingredient}: IIngredientCardProps): JSX.Element => {
 			<img alt={ingredient.name} src={ingredient.image} />
 			<Price price={ingredient.price} />
 			<div className={styles.name}>{ingredient.name}</div>
-			{count && (
+			{!!count && (
 				<Counter count={count} />
 			)}
 		</Link>

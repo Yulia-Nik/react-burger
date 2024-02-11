@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/store';
 import Tabs from '../tabs/tabs';
 import IngredientsGroup from '../ingredients-group/ingredients-group';
 
@@ -28,7 +28,6 @@ const getIngredientsGroupTitle = (key: string): string => {
 
 const BurgerIngredients = (props: IBurgerIngredientsProps): JSX.Element => {
 	const { ingredients } = useSelector(store => ({
-		// @ts-ignore
 		ingredients: store.ingredients.ingredients
 	}));
 
@@ -75,21 +74,21 @@ const BurgerIngredients = (props: IBurgerIngredientsProps): JSX.Element => {
 		<section className={props.extraClass}>
 			<Tabs current={activeTab} onClick={setActiveTab} />
 			<div className={styles.ingredientsContainer} ref={listRef}>
-				{ingredients.bun.length && (
+				{ingredients && ingredients.bun && ingredients.bun.length && (
 					<IngredientsGroup
 						title={getIngredientsGroupTitle('bun')}
 						data={ingredients.bun}
 						ref={bunRef}
 					/>
 				)}
-				{ingredients.main.length && (
+				{ingredients && ingredients.main && ingredients.main.length && (
 					<IngredientsGroup
 						title={getIngredientsGroupTitle('main')}
 						data={ingredients.main}
 						ref={mainRef}
 					/>
 				)}
-				{ingredients.sauce.length && (
+				{ingredients && ingredients.sauce && ingredients.sauce.length && (
 					<IngredientsGroup
 						title={getIngredientsGroupTitle('sauce')}
 						data={ingredients.sauce}

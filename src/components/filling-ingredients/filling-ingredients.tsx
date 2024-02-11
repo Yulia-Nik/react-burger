@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/store';
 import FillingIngredientItem from '../filling-ingredient-item/filling-ingredient-item';
 import { UPDATE_FILLING_INGREDIENTS } from '../../services/burger-ingredients/actions';
 import { IBurgerIngredientType } from '../../utils/types';
@@ -8,7 +8,6 @@ import styles from './filling-ingredients.module.css';
 
 const FillingIngredients = (): JSX.Element => {
 	const dispatch = useDispatch();
-	// @ts-ignore
 	const burgerIngredients = useSelector(store => store.burgerIngredients.burgerIngredients);
 
 	const moveCard = useCallback((dragIndex: number, hoverIndex: number): void => {

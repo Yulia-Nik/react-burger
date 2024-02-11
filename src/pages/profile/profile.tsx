@@ -1,25 +1,24 @@
 import { useState, useMemo, useRef, ChangeEvent, FormEvent } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import ProfileSidebar from '../../components/profile-sidebar/profile-sidebar';
 import FormContaner from '../../components/form-container/form-container';
 import { updateUserInfo } from '../../services/auth/actions';
+import { useDispatch, useSelector } from '../../services/store';
 
 import styles from './profile.module.css';
 
 const Profile = (): JSX.Element => {
 	const dispatch = useDispatch();
-	// @ts-ignore
 	const user = useSelector(store => store.auth.user);
-	const [name, setName] = useState<string>(user.name);
-	const [email, setEmail] = useState<string>(user.email);
+	const [name, setName] = useState<string>(user?.name || '');
+	const [email, setEmail] = useState<string>(user?.email || '');
 	const [password, setPassword] = useState<string>(user?.password || '');
 	const nameInputRef = useRef<HTMLInputElement | null>(null);
 
 	const hasChange = useMemo<boolean>(() => {
 		return (
-			name !== user.name
-			|| email !== user.email
+			name !== user?.name
+			|| email !== user?.email
 			|| !!password
 		);
 	}, [name, email, password, user]);
@@ -56,18 +55,16 @@ const Profile = (): JSX.Element => {
 	};
 
 	const handleOnCancel = (): void => {
-		setName(user.name);
-		setEmail(user.email);
+		setName(user?.name || '');
+		setEmail(user?.email || '');
 		setPassword('');
 	};
 
 	const handleOnSave = (event: FormEvent<HTMLFormElement>): void => {
 		event.preventDefault();
-
-		// @ts-ignore
 		dispatch(updateUserInfo({
-			name: name || user.name,
-			email: email || user.email,
+			name: name || user?.name,
+			email: email || user?.email,
 			password: password || '',
 		}));
 	};
