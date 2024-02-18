@@ -7,11 +7,12 @@ import styles from './ingredients-group.module.css';
 interface IIngedientsGroupProps {
 	title: string;
 	data: Array<IIngredientType>;
+	name?: string;
 }
 
 const IngredientsGroup = React.forwardRef((props: IIngedientsGroupProps, ref: Ref<HTMLDivElement>): JSX.Element => {
 	return (
-		<div className="mb-2" ref={ref}>
+		<div className="mb-2" ref={ref} data-group-name={props.name}>
 			<h2>{props.title}</h2>
 			<ul className={styles.list}>
 				{props.data.map(ingredient =>

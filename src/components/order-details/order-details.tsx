@@ -10,7 +10,7 @@ interface IOrderDetailsProps {
 const OrderDetails = ({ orderNumber }: IOrderDetailsProps): JSX.Element => {
 	return (
 		<div className={styles.container}>
-			<LuminousText text={orderNumber} type="large" extraClass="pl-10 pr-10 mb-8" />
+			<LuminousText text={orderNumber} type="large" extraClass="pl-10 pr-10 mb-8" name="order-number" />
 			<div className={styles.title}>идентификатор заказа</div>
 			<img src={iconDone} alt="Заказ принят" className={styles.icon} />
 			<div className="mb-2">Ваш заказ начали готовить</div>
