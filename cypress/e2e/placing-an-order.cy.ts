@@ -1,18 +1,20 @@
+const API_BASE_URL = 'https://norma.nomoreparties.space/api';
+
 describe('Placing an order', () => {
 	beforeEach(() => {
 		const email = 'ynikitina97@yandex.ru';
 		const password = 'gfhjkm111';
 
-		cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', { fixture: 'ingredients' });
-		cy.intercept('POST', 'https://norma.nomoreparties.space/api/orders', { fixture: 'create-order' });
+		cy.intercept('GET', `${API_BASE_URL}/ingredients`, { fixture: 'ingredients' });
+		cy.intercept('POST', `${API_BASE_URL}/orders`, { fixture: 'create-order' });
 
-		cy.visit('http://localhost:3000/login');
+		cy.visit('/login');
 		cy.get('input[name="email"]').type(`${email}{enter}`);
 		cy.get('input[name="password"]').type(`${password}{enter}`);
 	});
 
 	it('Go to home page passes', () => {
-		cy.visit('http://localhost:3000');
+		cy.visit('/');
 	});
 
 	it('Create order passes', () => {
@@ -32,9 +34,9 @@ describe('Placing an order', () => {
 
 describe('Ingredient modal window', () => {
 	beforeEach(() => {
-		cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', { fixture: 'ingredients' });
+		cy.intercept('GET', `${API_BASE_URL}/ingredients`, { fixture: 'ingredients' });
 
-		cy.visit('http://localhost:3000/');
+		cy.visit('/');
 
 		cy.get('[data-group-name="bun"] ul li:first').click();
 	});
