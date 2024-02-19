@@ -29,3 +29,23 @@ describe('Placing an order', () => {
 		cy.get('[data-name="order-number"]').should('have.text', 34479);
 	});
 });
+
+describe('Ingredient modal window', () => {
+	beforeEach(() => {
+		cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', { fixture: 'ingredients' });
+
+		cy.visit('http://localhost:3000/');
+
+		cy.get('[data-group-name="bun"] ul li:first').click();
+	});
+
+	it('Show ingreient modal', () => {
+		cy.get('[data-name="modal"]').should('have.length', 1);
+		cy.get('[data-name="ingredient-name"]').should('have.text', 'Краторная булка N-200i');
+	});
+
+	it('Close ingredient modal', () => {
+		cy.get('[data-name="close-modal"]').click();
+		cy.get('[data-name="modal"]').should('have.length', 0);
+	});
+});

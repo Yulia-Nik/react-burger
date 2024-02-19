@@ -10,7 +10,7 @@ const IngredientDetails = ({ingredient}: IIngredientDetailsProps): JSX.Element =
 	return (
 		<div className={styles.container}>
 			<img alt={ingredient.name} src={ingredient.image_large} />
-			<div className={styles.name}>{ingredient.name}</div>
+			<div className={styles.name} data-name="ingredient-name">{ingredient.name}</div>
 			<div className={styles.energyValue}>
 				<div className={styles.valueItem}>
 					<div className={styles.unit}>Калории, ккал</div>

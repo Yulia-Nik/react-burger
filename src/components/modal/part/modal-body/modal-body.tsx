@@ -14,7 +14,7 @@ const ModalBody = ({title, children, onClose}: IModalBodyProps): JSX.Element => 
 				{title && (
 					<h3 className={styles.title}>{title}</h3>
 				)}
-				<button className={styles.close} onClick={onClose}></button>
+				<button className={styles.close} onClick={onClose} data-name="close-modal"></button>
 			</div>
 			<div className={styles.content}>
 				{children}
