@@ -22,7 +22,7 @@ const Modal = ({title, children, onClose}: IModalBodyProps): JSX.Element => {
 	}, [onClose]);
 
 	return createPortal(
-		<div className={styles.wrap}>
+		<div className={styles.wrap} data-name="modal">
 			<ModalOverlay onClose={onClose} />
 			<ModalBody title={title} onClose={onClose}>
 				{children}

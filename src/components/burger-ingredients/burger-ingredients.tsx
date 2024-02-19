@@ -79,6 +79,7 @@ const BurgerIngredients = (props: IBurgerIngredientsProps): JSX.Element => {
 						title={getIngredientsGroupTitle('bun')}
 						data={ingredients.bun}
 						ref={bunRef}
+						name="bun"
 					/>
 				)}
 				{ingredients && ingredients.main && ingredients.main.length && (
@@ -86,6 +87,7 @@ const BurgerIngredients = (props: IBurgerIngredientsProps): JSX.Element => {
 						title={getIngredientsGroupTitle('main')}
 						data={ingredients.main}
 						ref={mainRef}
+						name="main"
 					/>
 				)}
 				{ingredients && ingredients.sauce && ingredients.sauce.length && (
@@ -93,6 +95,7 @@ const BurgerIngredients = (props: IBurgerIngredientsProps): JSX.Element => {
 						title={getIngredientsGroupTitle('sauce')}
 						data={ingredients.sauce}
 						ref={sauceRef}
+						name="sauce"
 					/>
 				)}
 			</div>

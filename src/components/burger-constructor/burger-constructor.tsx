@@ -147,13 +147,13 @@ const BurgerConstructor = ({extraClass}: IBurgerConstructorProps): JSX.Element =
 									type="top"
 									isLocked={true}
 								/>
-							) : (<ConstructorPartEmpty outline={bunOutline}>Выберите булки</ConstructorPartEmpty>)
+							) : (<ConstructorPartEmpty outline={bunOutline} name={'bun'}>Выберите булки</ConstructorPartEmpty>)
 						}
 					</li>
 
 					<li className={`${styles.gropItem} mt-4 mb-4`} ref={fillingDropRef}>
 						{burgerIngredients.filling.length
-							? <FillingIngredients /> : <ConstructorPartEmpty outline={fillingOutline}>Выберите начинку</ConstructorPartEmpty>
+							? <FillingIngredients /> : <ConstructorPartEmpty outline={fillingOutline} name={'filling'}>Выберите начинку</ConstructorPartEmpty>
 						}
 					</li>
 
@@ -174,7 +174,7 @@ const BurgerConstructor = ({extraClass}: IBurgerConstructorProps): JSX.Element =
 				</ul>
 				<div className={styles.footer}>
 					<Price price={burgerPrice} type="big" />
-					<Button htmlType="button" type="primary" size="medium" extraClass="ml-10" onClick={handleCreateOrder} disabled={!isActiveBtn}>
+					<Button htmlType="button" type="primary" size="medium" extraClass="ml-10" onClick={handleCreateOrder} disabled={!isActiveBtn} name="create-order">
 						Оформить заказ
 					</Button>
 				</div>
