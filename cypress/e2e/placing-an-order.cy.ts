@@ -2,11 +2,8 @@ describe('Placing an order', () => {
 	beforeEach(() => {
 		const email = 'ynikitina97@yandex.ru';
 		const password = 'gfhjkm111';
-		// const email = 'example@yandex.ru';
-		// const password = 'gfhjkm111';
 
-		cy.intercept('POST', 'https://norma.nomoreparties.space/api/auth/token', { fixture: 'refresh-token' })
-		// cy.intercept('POST', 'https://norma.nomoreparties.space/api/auth/login', { fixture: 'login' });
+		cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', { fixture: 'ingredients' });
 		cy.intercept('POST', 'https://norma.nomoreparties.space/api/orders', { fixture: 'create-order' });
 
 		cy.visit('http://localhost:3000/login');

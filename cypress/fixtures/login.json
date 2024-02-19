@@ -1,9 +1,0 @@
-{
-	"success": true,
-	"accessToken": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODliZDA1ODc4OTljMDAxYjgyNTY2ZSIsImlhdCI6MTcwODI4Mjc3MSwiZXhwIjoxNzA4MjgzOTcxfQ.od8QlKCNWWpm-M2kHzsKbBCNsmndRsbOHoPrMOwUUyU",
-	"refreshToken": "393edfa2600ad6b30b0dedfbce812468a4df0153ba304c28189baa621899f9bb1ee54920e5c4401b",
-	"user": {
-		"email": "example@yandex.ru",
-		"name": "Юля"
-	}
-}
